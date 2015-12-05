@@ -1,6 +1,14 @@
-var app = angular.module('bikersApp', ['ngRoute', 'services', 'controllers']);
+var base = document.createElement('base');
 
-angular.element(document.getElementsByTagName('head')).append(angular.element('<base href="' + window.location.pathname + '" />')); //base url required for proper routing
+if (window.location.origin !== 'null') {
+    base.setAttribute('href', window.location.origin + window.location.pathname);
+} else {
+    base.setAttribute('href', window.location.protocol + '//' + window.location.pathname);
+}
+
+document.getElementsByTagName('head')[0].appendChild(base);
+
+var app = angular.module('bikersApp', ['ngRoute', 'services', 'controllers']);
 
 app.constant('url', 'localhost/bikers/api/v1/'); //default api path
 
@@ -32,19 +40,17 @@ app.config(function ($routeProvider, $locationProvider, $httpProvider) {
         .when('/login/', {
             templateUrl: 'src/templates/desktop/login.html'
         })
+        .when('/:controller/', {
+            templateUrl: function (params) {
+                return 'src/templates/' + params.controller + '/main.html';
+            },
+            resolve: resolve
+        })
         .when('/:controller/:action/', {
             templateUrl: function (params) {
                 return 'src/templates/' + params.controller + '/' + params.action + '.html';
             },
             resolve: resolve
         })
-        .when('/:controller/', {
-            templateUrl: function (params) {
-                return 'src/templates/' + params.controller + '.html';
-            },
-            resolve: resolve
-        })
         .otherwise({redirectTo:'/'});
-
-    $locationProvider.html5Mode(true); //nice html5 urls and browser history support
 });
