@@ -12,16 +12,23 @@
     <link rel="stylesheet" href="bower_components/angular-bootstrap/ui-bootstrap-csp.css">
     <link rel="stylesheet" href="src/css/main.css">
 </head>
-<body>
+<body ng-app="bikersApp" role="document">
     <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
                 <a href="#" class="navbar-brand">Bikers Polska</a>
             </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li class="active">
+                        <a href="#/">Strona główna</a>
+                    </li>git
+                </ul>
+            </div>
         </div>
     </nav>
 
-    <div class="container theme-showcase" role="main">
+    <div class="container theme-showcase" role="main" ng-view>
 
     </div>
 
@@ -30,6 +37,12 @@
     <script src="bower_components/angular/angular.js"></script>
     <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
     <script src="bower_components/angular-route/angular-route.js"></script>
+
+    <script src="src/js/controllers/controllers.js"></script>
+
+    <script src="src/js/services/src/auth.js"></script>
+    <script src="src/js/services/services.js"></script>
+
     <script src="src/js/main.js"></script>
 </body>
-</html>g
+</html>
