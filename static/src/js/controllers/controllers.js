@@ -1,3 +1,7 @@
 angular.module('controllers', [
-    'controllers.nav'
+    'controllers.nav',
+    'controllers.bikes',
+    'controllers.login',
+    'controllers.parts',
+    'controllers.users'
 ]);
