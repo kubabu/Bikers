@@ -1,6 +1,11 @@
 <!-- Informacje o użytkowniku -->
 <div class="row">
     <div class="col-xs-12" ng-controller="UsersCtrl">
-
+        <table class="table table-responsive" id="usersBikes">
+            <tr><th> Rower </th><th>Opis</th></tr>
+            <tr ng-repeat="bike in user.bikes">
+                <td>{{ bike.name }}</td><td>{{ bike.description }}</td>
+            </tr>
+        </table>
     </div>
 </div>
