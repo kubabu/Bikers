@@ -4,9 +4,20 @@ angular.module('controllers.bikes', []).controller('BikesCtrl', ['$scope', funct
     }];
 }]);
 
-angular.module('controllers.users').controller('BikesNewCtrl', ['$scope', function ($scope) {
+angular.module('controllers.bikes').controller('BikesNewCtrl', ['$scope', function ($scope) {
     $scope.bike = {};
     $scope.submit = function () {
 
     }
+}]);
+
+angular.module('controllers.bikes').controller('BikesShowCtrl', ['$scope', function ($scope) {
+    $scope.bike = {
+        name:"Romet Osa",
+        description:"Składak z koralikami na kołach",
+        parts:[
+            {name:"koralik1"},
+            {name:"koralik2"}
+        ]
+    };
 }]);

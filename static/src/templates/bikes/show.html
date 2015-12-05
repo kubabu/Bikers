@@ -1,0 +1,13 @@
+<div class="row">
+    <div class="col-xs-12" ng-controller="BikesShowCtrl">
+        <H2>{{ bike.name }}</H2>
+        <p>{{ bike.description }}</p>
+        <div ng-if="bike.parts && bike.parts.length > 0">
+            <h4>Zamontowane częsci </h4>
+            <p ng-repeat="part in bike.parts">
+                {{part.name}}
+            </p>
+        </div>
+
+    </div>
+</div>
