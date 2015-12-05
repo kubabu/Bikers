@@ -2,11 +2,11 @@
     <div class="col-xs-12" ng-controller="UsersNewCtrl">
         <div class="form-group">
             <label for="login">Nazwa użytkownika</label>
-            <input type="text" class="form-control" id="login" ng-model="user.login">
+            <input type="text" class="form-control" id="login" ng-model="user.auth.login">
         </div>
         <div class="form-group">
             <label for="password">Hasło</label>
-            <input type="password" class="form-control" id="password" ng-model="user.password">
+            <input type="password" class="form-control" id="password" ng-model="user.auth.password">
         </div>
         <div class="form-group">
             <button class="btn btn-primary" ng-click="submit()">Zapisz</button>
