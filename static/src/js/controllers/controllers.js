@@ -4,5 +4,5 @@ angular.module('controllers', [
     'controllers.login',
     'controllers.parts',
     'controllers.users',
-    'controllers.route'
+    'controllers.routes'
 ]);
