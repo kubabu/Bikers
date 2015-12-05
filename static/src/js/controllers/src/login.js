@@ -1,4 +1,4 @@
-angular.module('conrollers.login', []).controller('LoginCtrl', ['$scope', 'AuthSvc', '$timeout', function ($scope, AuthSvc, $timeout) {
+angular.module('controllers.login', []).controller('LoginCtrl', ['$scope', 'AuthSvc', '$timeout', function ($scope, AuthSvc, $timeout) {
     $scope.username = '';
     $scope.password = '';
     $scope.alert = {
