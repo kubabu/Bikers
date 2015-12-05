@@ -1,1 +1,3 @@
-angular.module('controllers', []);
+angular.module('controllers', [
+    'controllers.nav'
+]);

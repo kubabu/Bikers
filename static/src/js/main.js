@@ -2,21 +2,27 @@ var app = angular.module('bikersApp', ['ngRoute', 'services', 'controllers']);
 
 angular.element(document.getElementsByTagName('head')).append(angular.element('<base href="' + window.location.pathname + '" />')); //base url required for proper routing
 
-app.config(function ($routeProvider, $locationProvider) {
+app.constant('url', 'localhost/bikers/api/v1/'); //default api path
+
+app.config(function ($routeProvider, $locationProvider, $httpProvider) {
     var resolve = {
         auth: function ($q, AuthSvc, $location) {
             var defer = $q.defer();
 
-            if (!AuthSvc.isLogged()) {
-                $location.path('/login/');
-                defer.resolve(false);
-            } else {
-                defer.resolve(true);
-            }
+            AuthSvc.isLogged().then(function (logged) {
+                if (!logged) {
+                    $location.path('/login/');
+                    defer.resolve(false);
+                } else {
+                    defer.resolve(true);
+                }
+            });
 
             return defer.promise;
         }
     }; //check auth before any routing
+
+    $httpProvider.defaults.headers.common.Token = window.localStorage['Token'] || '';
 
     $routeProvider
         .when('/', {

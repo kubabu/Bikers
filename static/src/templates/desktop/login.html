@@ -1,0 +1,16 @@
+<div class="row">
+    <div ng-contoller="LoginCtrl" class="jumbotron col-md-4 col-md-offset-4">
+        <div class="form-group">
+            <label for="login">Login</label>
+            <input type="text" id="login" class="form-control" ng-model="login">
+        </div>
+        <div class="form-group">
+            <label for="password">Hasło</label>
+            <input type="password" id="password" class="form-control" ng-model="password">
+        </div>
+        <div class="form-group">
+            <button class="btn btn-primary btn-block btn-lg" ng-click="submit()">Zaloguj</button>
+        </div>
+        <uib-alert ng-if="alert.msg.length > 0" type="{{alert.type}}">{{alert.msg}}</uib-alert>
+    </div>
+</div>

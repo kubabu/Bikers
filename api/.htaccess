@@ -3,3 +3,8 @@ RewriteBase /bikers
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule . /bikers/index.php [L]
+
+Header always set Access-Control-Allow-Origin "*"
+Header always set Access-Control-Allow-Methods "POST, GET, OPTIONS, DELETE, PUT"
+Header always set Access-Control-Max-Age "86400"
+Header always set Access-Control-Allow-Headers "x-requested-with, Content-Type, Origin, Authorization, Accept, Token"
