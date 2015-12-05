@@ -1,0 +1,19 @@
+<!-- Lista rowerów -->
+<div class="row">
+    <div class="col-xs-12" ng-controller="BikesCtrl">
+        <table class="table table-responsive">
+            <tr>
+                <th>Lp</th>
+                <th>Rower</th>
+                <th>Akcje</th>
+            </tr>
+            <tr ng-repeat="bike in bikes">
+                <td>{{$index + 1}}.</td>
+                <td>{{bike.name}}</td>
+                <td>
+                    <button class="btn btn-primary">Zobacz</button>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
