@@ -3,5 +3,6 @@ angular.module('controllers', [
     'controllers.bikes',
     'controllers.login',
     'controllers.parts',
-    'controllers.users'
+    'controllers.users',
+    'controllers.route'
 ]);

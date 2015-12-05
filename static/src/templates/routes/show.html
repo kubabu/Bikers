@@ -1,0 +1,8 @@
+<div class="row">
+    <div class="col-xs-12" ng-controller="RouteShowCtrl">
+        <h1>Trasa</h1>
+        <p>Początek: {{route.from}}</p>
+        <p ng-repeat="landmark in route.landmarks">- {{landmark.name}}</p>
+        <p>Koniec: {{route.to}}</p>
+    </div>
+</div>
