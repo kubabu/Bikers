@@ -1,0 +1,15 @@
+<div class="row">
+    <div class="col-xs-12" ng-controller="MessagesNewCtrl">
+        <div class="form-group">
+            <label for="msg_to">Do</label>
+            <input type="text" id="msg_to" ng-model="message.to">
+        </div>
+        <div class="form-group">
+            <label for="msg_value">Treść</label>
+            <input type="text" id="msg_value" ng-model="message.value">
+        </div>
+        <div class="form-group">
+            <button class="btn btn-primary" ng-click="submit()">Wyślij</button>
+        </div>
+    </div>
+</div>
