@@ -1,4 +1,4 @@
-angular.module('services.bikes').service('BikesSvc', ['$http', '$q', 'url', function ($http, $q, url) {
+angular.module('services.bikes', []).service('BikesSvc', ['$http', '$q', 'url', function ($http, $q, url) {
     var self = {};
 
     self.getBikes = function(filters) {
