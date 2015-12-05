@@ -14,6 +14,7 @@ angular.module('services.auth', []).service('AuthSvc', ['$q', '$http', '$rootSco
         //   }
         //});
 
+        $rootScope.logged = true;
         defer.resolve(true);
 
         return defer.promise;
