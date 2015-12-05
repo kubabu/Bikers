@@ -116,6 +116,22 @@ CREATE TABLE IF NOT EXISTS `users_auth` (
   KEY `user_ID_2` (`user_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
 
+DROP TABLE IF EXISTS `users_routes`;
+CREATE TABLE IF NOT EXISTS `users_routes` (
+  `ID` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `user_ID` int(10) unsigned NOT NULL,
+  `route_ID` int(10) unsigned NOT NULL,
+  `bike_ID` int(10) unsigned NOT NULL,
+  `date_of_ride` datetime NOT NULL,
+  `date_created` datetime NOT NULL,
+  `duration_of_ride` int(11) NOT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `user_ID` (`user_ID`,`route_ID`,`bike_ID`),
+  KEY `route_ID` (`route_ID`),
+  KEY `route_ID_2` (`route_ID`),
+  KEY `bike_ID` (`bike_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci AUTO_INCREMENT=1 ;
+
 
 ALTER TABLE `bikes`
   ADD CONSTRAINT `bikes_ibfk_1` FOREIGN KEY (`user_ID`) REFERENCES `users` (`ID`) ON DELETE CASCADE;
@@ -137,6 +153,11 @@ ALTER TABLE `route_landmarks`
 
 ALTER TABLE `users_auth`
   ADD CONSTRAINT `users_auth_ibfk_1` FOREIGN KEY (`user_ID`) REFERENCES `users` (`ID`) ON DELETE CASCADE;
+
+ALTER TABLE `users_routes`
+  ADD CONSTRAINT `users_routes_ibfk_3` FOREIGN KEY (`user_ID`) REFERENCES `users` (`ID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `users_routes_ibfk_1` FOREIGN KEY (`route_ID`) REFERENCES `routes` (`ID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `users_routes_ibfk_2` FOREIGN KEY (`bike_ID`) REFERENCES `bikes` (`ID`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
