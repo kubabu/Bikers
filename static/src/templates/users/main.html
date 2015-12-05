@@ -7,5 +7,15 @@
                 <td>{{ bike.name }}</td><td>{{ bike.description }}</td>
             </tr>
         </table>
+
+        <table class="table table-responsive" id="usersRoutes">
+            <tr><th> Trasa </th><th>Rower</th><th>Data</th><th>Czas</th></tr>
+            <tr ng-repeat="route in user.routes">
+                <td>{{ route.name }}</td>
+                <td>{{ route.bike.name }}</td>
+                <td>{{ route.date_of_ride }}</td>
+                <td>{{ route.duration_of_ride }}</td>
+            </tr>
+        </table>
     </div>
 </div>
