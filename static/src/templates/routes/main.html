@@ -1,0 +1,26 @@
+<!-- Lista rowerów -->
+<div class="row">
+    <div class="col-xs-12" ng-controller="RoutesCtrl">
+        <div class="jumbotron">
+            <a href="#/routes/new" class="btn btn-primary btn-block btn-lg">Dodaj nową</a>
+        </div>
+
+        <table class="table table-responsive">
+            <tr>
+                <th>Lp</th>
+                <th>Trasa</th>
+                <th>Początek</th>
+                <th>Koniec</th>
+            </tr>
+            <tr ng-repeat="route in routes">
+                <td>{{$index + 1}}.</td>
+                <td>{{route.name}}</td>
+                <td>{{route.from}}</td>
+                <td>{{route.to}}</td>
+                <td>
+                    <button class="btn btn-primary">Zobacz</button>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
