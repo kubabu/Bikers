@@ -8,8 +8,7 @@
 
 namespace Modules\Users;
 
-
-use Modules\Modules\BasicModule;
+use Modules\Basic\BasicModule;
 
 class Auth extends BasicModule
 {
@@ -25,9 +24,11 @@ class Auth extends BasicModule
      */
     public function get($data)
     {
+        $data = $this->sanitizeInput($data);
+
         $headers = apache_request_headers();
 
-        if (array_key_exists('Token', $headers)) {
+        if (array_key_exists('Token', $headers) && array_key_exists('login', $data)) {
             $q = "SELECT token FROM users_auth WHERE ip_addr = :ip AND token = :token AND login = :login";
 
             if ($stmt = $this->db->prepare($q)) {
@@ -51,7 +52,7 @@ class Auth extends BasicModule
     }
 
     /**
-     * Binds new token for user
+     * Binds new token for user if login is present in database otherwise register new user and return him token
      * @param $data
      * @return array
      */
@@ -71,6 +72,23 @@ class Auth extends BasicModule
 
             if ($stmt->rowCount() > 0) {
                 return [$token];
+            } else if (!empty($data['login']) && !empty($data['password']) && !empty($data['register'])) {
+                $q = "SELECT id FROM users_auth WHERE login = :login";
+                $stmt = $this->db->prepare($q);
+                $stmt->execute([':login' => $data['login']]);
+
+                if (!count($stmt->fetch(\PDO::FETCH_ASSOC))) {
+                    $q = "INSERT INTO users_auth (ip_addr, token, login, password) VALUES (:ip, :token, :login, :password)";
+
+                    if ($stmt->execute([
+                        ':ip' => ip2long($this->getRequestIp()),
+                        ':token' => $token,
+                        ':login' => $data['login'],
+                        ':password' => md5($data['password'])
+                    ])) {
+                        return [true];
+                    }
+                }
             }
         } else {
             return [false]; //pdo cannot successfuly prepare stmt

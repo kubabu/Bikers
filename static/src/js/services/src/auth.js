@@ -4,26 +4,25 @@ angular.module('services.auth', []).service('AuthSvc', ['$q', '$http', '$rootSco
     self.isLogged = function () {
         var defer = $q.defer();
 
-        //$http.get(url + 'users/auth').then(function (res) {
-        //   if (res.data.status) {
-        //       $rootScope.logged = true;
-        //       defer.resolve(true);
-        //   } else {
-        //       $rootScope.logged = false;
-        //       defer.resolve(true);
-        //   }
-        //});
-
-        $rootScope.logged = true;
-        defer.resolve(true);
+        $http.get(url + 'users/auth', {
+            login: window.localStorage.getItem('login') || ''
+        }).then(function (res) {
+           if (res.data.status) {
+               $rootScope.logged = res.data.data[0];
+               defer.resolve(res.data.data[0]);
+           } else {
+               $rootScope.logged = false;
+               defer.resolve(false);
+           }
+        });
 
         return defer.promise;
     };
 
-    self.login = function (login, password) {
+    self.login = function (login, password, register) {
         var defer = $q.defer();
 
-        $http.post(url + '/users/auth', {login: login, password: password}).then(function (res) {
+        $http.post(url + '/users/auth', {login: login, password: password, register: register}).then(function (res) {
             if (res.data.status == false) {
                 window.localStorage.removeItem('Token');
             } else {

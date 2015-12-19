@@ -2,7 +2,7 @@ RewriteEngine On
 RewriteBase /bikers
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule . /bikers/index.php [L]
+RewriteRule . /bikers/api/index.php [L]
 
 Header always set Access-Control-Allow-Origin "*"
 Header always set Access-Control-Allow-Methods "POST, GET, OPTIONS, DELETE, PUT"

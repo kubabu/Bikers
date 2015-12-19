@@ -8,7 +8,7 @@
 
 namespace Modules\Users;
 
-use Modules\Modules\BasicModule;
+use Modules\Basic\BasicModule;
 
 class User extends BasicModule
 {
@@ -19,6 +19,8 @@ class User extends BasicModule
 
     public function get($data)
     {
+        $data = $this->sanitizeInput($data);
+
         $q = "SELECT * FROM `users`";
         $params = [];
         $wheres = [];

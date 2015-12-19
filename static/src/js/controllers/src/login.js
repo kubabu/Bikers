@@ -1,4 +1,6 @@
 angular.module('controllers.login', []).controller('LoginCtrl', ['$scope', 'AuthSvc', '$timeout', function ($scope, AuthSvc, $timeout) {
+    console.log('tutaj');
+
     $scope.username = '';
     $scope.password = '';
     $scope.alert = {
@@ -6,8 +8,8 @@ angular.module('controllers.login', []).controller('LoginCtrl', ['$scope', 'Auth
         msg: ''
     };
 
-    $scope.submit = function () {
-        AuthSvc.login().then(function (status) {
+    $scope.login = function () {
+        AuthSvc.login($scope.username, $scope.password).then(function (status) {
             if (status) {
                 $scope.alert = {
                     type: 'success',
@@ -25,4 +27,24 @@ angular.module('controllers.login', []).controller('LoginCtrl', ['$scope', 'Auth
             }
         });
     };
+
+    $scope.register = function () {
+        AuthSvc.login($scope.username, $scope.password, true).then(function (status) {
+            if (status) {
+                $scope.alert = {
+                    type: 'success',
+                    msg: 'Zarejestrowano poprawnie. Nastąpi przekierowanie'
+                };
+
+                $timeout(function () {
+                    window.history.back();
+                }, 500);
+            } else {
+                $scope.alert = {
+                    type: 'danger',
+                    msg: 'Nastąpił nieoczekiwany błąd podczas rejestracji'
+                };
+            }
+        });
+    }
 }]);

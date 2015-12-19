@@ -1,6 +1,7 @@
 <?php
 
 define('DEBUG', true);
+define('API_ROOT', str_replace('index.php', '', $_SERVER['SCRIPT_FILENAME']));
 
 if (DEBUG) {
     ini_set('display_errors', 1);
@@ -20,7 +21,7 @@ function autoload($className)
     }
     $fileName .= str_replace('_', DIRECTORY_SEPARATOR, $className) . '.php';
 
-    require 'src/' . $fileName;
+    require API_ROOT . 'src/' . $fileName;
 }
 
 function fail($data) {

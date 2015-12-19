@@ -6,7 +6,7 @@
  * Time: 20:10
  */
 
-namespace Modules\Modules;
+namespace Modules\Basic;
 
 
 use Modules\ModuleInterface;
@@ -54,5 +54,13 @@ class BasicModule implements ModuleInterface
     public function put($data)
     {
         // TODO: Implement put() method.
+    }
+
+    public function sanitizeInput($data) {
+        if (!is_array($data)) {
+            $data = array();
+        }
+
+        return $data;
     }
 }
