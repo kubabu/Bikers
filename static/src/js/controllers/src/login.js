@@ -1,6 +1,4 @@
 angular.module('controllers.login', []).controller('LoginCtrl', ['$scope', 'AuthSvc', '$timeout', function ($scope, AuthSvc, $timeout) {
-    console.log('tutaj');
-
     $scope.username = '';
     $scope.password = '';
     $scope.alert = {
