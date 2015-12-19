@@ -31,7 +31,7 @@ function fail($data) {
 
     http_response_code(520);
 
-    echo json_encode(array('status' => false, 'data' => $data));
+    echo json_encode(array('status' => false, 'results' => $data));
 }
 
 function success($data) {
@@ -39,7 +39,7 @@ function success($data) {
         $data = []; //always respond an array if success
     }
 
-    echo json_encode(array('status' => true, 'data' => $data));
+    echo json_encode(array('status' => true, 'results' => $data));
 }
 
 spl_autoload_register('autoload'); //register psr-0 class autoloader

@@ -44,7 +44,8 @@ app.config(function ($routeProvider, $locationProvider, $httpProvider) {
             resolve: resolve
         })
         .when('/login/', {
-            templateUrl: 'src/templates/desktop/login.html'
+            templateUrl: 'src/templates/desktop/login.html',
+            resolve: {}
         })
         .when('/:controller/', {
             templateUrl: function (params) {

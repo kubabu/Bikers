@@ -22,7 +22,7 @@ angular.module('services.auth', []).service('AuthSvc', ['$q', '$http', '$rootSco
     self.login = function (login, password, register) {
         var defer = $q.defer();
 
-        $http.post(url + '/users/auth', {login: login, password: password, register: register}).then(function (res) {
+        $http.post(url + 'users/auth', {login: login, password: password, register: register}).then(function (res) {
             if (res.data.status == false) {
                 window.localStorage.removeItem('Token');
             } else {

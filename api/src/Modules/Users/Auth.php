@@ -60,33 +60,40 @@ class Auth extends BasicModule
     {
         $q = "UPDATE users_auth SET ip_addr = :ip, token = :token WHERE login = :login AND password = :password";
 
-        $token = md5($data['password'] . $data['login'] . mt_rand());
+        $token = md5($data->password . $data->login . mt_rand());
 
         if ($stmt = $this->db->prepare($q)) {
-            $stmt->execute([
+            $input = [
                 ':ip' => ip2long($this->getRequestIp()),
                 ':token' => $token,
-                ':login' => $data['login'],
-                ':password' => md5($data['password'])
-            ]);
+                ':login' => $data->login,
+                ':password' => md5($data->password)
+            ];
+
+            $stmt->execute($input);
 
             if ($stmt->rowCount() > 0) {
                 return [$token];
-            } else if (!empty($data['login']) && !empty($data['password']) && !empty($data['register'])) {
+            } else if (!empty($data->login) && !empty($data->password) && !empty($data->register)) {
                 $q = "SELECT id FROM users_auth WHERE login = :login";
                 $stmt = $this->db->prepare($q);
-                $stmt->execute([':login' => $data['login']]);
+                $stmt->execute([':login' => $data->login]);
 
-                if (!count($stmt->fetch(\PDO::FETCH_ASSOC))) {
-                    $q = "INSERT INTO users_auth (ip_addr, token, login, password) VALUES (:ip, :token, :login, :password)";
+                if (!count($stmt->fetchAll())) {
+                    $q = "INSERT INTO users (first_name, last_name, date_create, date_update) VALUES ('', '', NOW(), NOW())";
+                    $stmt = $this->db->prepare($q);
 
-                    if ($stmt->execute([
-                        ':ip' => ip2long($this->getRequestIp()),
-                        ':token' => $token,
-                        ':login' => $data['login'],
-                        ':password' => md5($data['password'])
-                    ])) {
-                        return [true];
+                    if ($stmt->execute()) {
+                        $input[':user_id'] = $this->db->lastInsertId();
+
+                        $q = "INSERT INTO users_auth (user_ID, ip_addr, token, login, password) VALUES (:user_id, :ip, :token, :login, :password)";
+                        $stmt = $this->db->prepare($q);
+
+                        if ($stmt->execute($input)) {
+                            return [$token];
+                        }
+                    } else {
+                        return [false];
                     }
                 }
             }
@@ -97,12 +104,15 @@ class Auth extends BasicModule
 
     private function getRequestIp()
     {
-        if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
-            return $_SERVER['HTTP_CLIENT_IP'];
-        } elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-            return $_SERVER['HTTP_X_FORWARDED_FOR'];
-        } else {
-            return $_SERVER['REMOTE_ADDR'];
-        }
+        return '127.0.0.1';
+//        if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
+//            return $_SERVER['HTTP_CLIENT_IP'];
+//        } elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+//            return $_SERVER['HTTP_X_FORWARDED_FOR'];
+//        } elseif (!empty($_SERVER['REMOTE_ADDR'])) {
+//            return $_SERVER['REMOTE_ADDR'];
+//        } else {
+//            return '127.0.0.1';
+//        }
     }
 }
