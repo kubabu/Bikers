@@ -25,8 +25,7 @@ CREATE TABLE IF NOT EXISTS `bikes_parts` (
   `part_ID` int(10) unsigned NOT NULL,
   `description` text COLLATE utf8_polish_ci NOT NULL,
   KEY `bike_ID` (`bike_ID`,`part_ID`),
-  KEY `part_ID` (`part_ID`),
-  KEY `part_ID_2` (`part_ID`)
+  KEY `part_ID` (`part_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
 
 DROP TABLE IF EXISTS `bike_comments`;
@@ -91,8 +90,7 @@ CREATE TABLE IF NOT EXISTS `route_landmarks` (
   `order` int(11) NOT NULL,
   PRIMARY KEY (`ID`),
   UNIQUE KEY `order` (`order`),
-  KEY `route_ID` (`route_ID`),
-  KEY `route_ID_2` (`route_ID`)
+  KEY `route_ID` (`route_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci AUTO_INCREMENT=1 ;
 
 DROP TABLE IF EXISTS `users`;
@@ -128,7 +126,6 @@ CREATE TABLE IF NOT EXISTS `users_routes` (
   PRIMARY KEY (`ID`),
   KEY `user_ID` (`user_ID`,`route_ID`,`bike_ID`),
   KEY `route_ID` (`route_ID`),
-  KEY `route_ID_2` (`route_ID`),
   KEY `bike_ID` (`bike_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci AUTO_INCREMENT=1 ;
 
