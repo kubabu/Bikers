@@ -28,8 +28,8 @@ CREATE TABLE IF NOT EXISTS `bikes_parts` (
   KEY `part_ID` (`part_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
 
-DROP TABLE IF EXISTS `bike_comments`;
-CREATE TABLE IF NOT EXISTS `bike_comments` (
+DROP TABLE IF EXISTS `bikes_comments`;
+CREATE TABLE IF NOT EXISTS `bikes_comments` (
   `ID` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `bike_ID` int(10) unsigned NOT NULL,
   `user_ID` int(10) unsigned NOT NULL,
