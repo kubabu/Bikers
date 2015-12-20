@@ -92,16 +92,12 @@ class Auth extends BasicModule
                         if ($stmt->execute($input)) {
                             return [$token];
                         }
-                    } else {
-                        return [false];
                     }
                 }
-            } else {
-                return [false];
             }
-        } else {
-            return [false]; //pdo cannot successfuly prepare stmt
         }
+
+        return [false];
     }
 
     private function getRequestIp()
