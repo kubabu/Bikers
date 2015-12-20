@@ -5,7 +5,7 @@ angular.module('services.auth', []).service('AuthSvc', ['$q', '$http', '$rootSco
         var defer = $q.defer();
 
         $http.get(url + 'users/auth', {
-            login: window.localStorage.getItem('login') || ''
+            username: window.localStorage.getItem('username') || ''
         }).then(function (res) {
            if (res.data.status) {
                $rootScope.logged = res.data.results[0];
@@ -25,8 +25,10 @@ angular.module('services.auth', []).service('AuthSvc', ['$q', '$http', '$rootSco
         $http.post(url + 'users/auth', {username: username, password: password, register: register}).then(function (res) {
             if (res.data.status == false) {
                 window.localStorage.removeItem('Token');
+                window.localStorage.removeItem('username');
             } else {
                 window.localStorage['Token'] = res.data.results[0];
+                window.localStorage['username'] = username;
             }
 
             defer.resolve(res.data.status);

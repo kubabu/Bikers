@@ -28,14 +28,14 @@ class Auth extends BasicModule
 
         $headers = apache_request_headers();
 
-        if (array_key_exists('Token', $headers) && array_key_exists('login', $data)) {
-            $q = "SELECT token FROM users_auth WHERE ip_addr = :ip AND token = :token AND login = :login";
+        if (array_key_exists('Token', $headers) && !empty($data->username)) {
+            $q = "SELECT token FROM users_auth WHERE IP = :ip AND token = :token AND username = :username";
 
             if ($stmt = $this->db->prepare($q)) {
                 $stmt->execute([
                     ':ip' => ip2long($this->getRequestIp()),
                     ':token' => $headers['Token'],
-                    ':login' => $data['login']
+                    ':username' => $data->username
                 ]);
 
                 $data = $stmt->fetchAll(\PDO::FETCH_ASSOC);
@@ -74,8 +74,8 @@ class Auth extends BasicModule
 
             if ($stmt->rowCount() > 0) {
                 return [$token];
-            } else if (!empty($data->login) && !empty($data->password) && !empty($data->register)) {
-                $q = "SELECT id FROM users_auth WHERE username = :username";
+            } else if (!empty($data->username) && !empty($data->password) && !empty($data->register)) {
+                $q = "SELECT user_ID FROM users_auth WHERE username = :username";
                 $stmt = $this->db->prepare($q);
                 $stmt->execute([':username' => $data->username]);
 
@@ -96,6 +96,8 @@ class Auth extends BasicModule
                         return [false];
                     }
                 }
+            } else {
+                return [false];
             }
         } else {
             return [false]; //pdo cannot successfuly prepare stmt

@@ -14,14 +14,14 @@ app.constant('url', 'http://localhost/bikers/api/v1/'); //default api path
 
 app.config(function ($routeProvider, $locationProvider, $httpProvider) {
     var resolve = {
-        //token: function ($q) {
-        //    var defer = $q.defer();
-        //
-        //    $httpProvider.defaults.headers.common.Token = window.localStorage['Token'] || 'test';
-        //    defer.resolve(true);
-        //
-        //    return $defer.promise;
-        //},
+        token: function ($q) {
+            var defer = $q.defer();
+
+            $httpProvider.defaults.headers.common.Token = window.localStorage['Token'] || 'test';
+            defer.resolve(true);
+
+            return defer.promise;
+        },
         auth: function ($q, AuthSvc, $location) {
             var defer = $q.defer();
 
