@@ -76,6 +76,10 @@ if (!empty($matches[2])) {
         $method = 'del';
     }
 
+    if (empty($input) && $method == 'get') {
+        $input = (object) $_GET;
+    }
+
     $db = null;
 
     try {

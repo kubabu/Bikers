@@ -17,7 +17,7 @@ app.config(function ($routeProvider, $locationProvider, $httpProvider) {
         token: function ($q) {
             var defer = $q.defer();
 
-            $httpProvider.defaults.headers.common.Token = window.localStorage['Token'] || 'test';
+            $httpProvider.defaults.headers.common.Token = window.localStorage['Token'] || '';
             defer.resolve(true);
 
             return defer.promise;
@@ -45,7 +45,19 @@ app.config(function ($routeProvider, $locationProvider, $httpProvider) {
         })
         .when('/login/', {
             templateUrl: 'src/templates/desktop/login.html',
-            resolve: {}
+            resolve: angular.extend({}, resolve, {
+                auth: function ($q, AuthSvc, $location) {
+                    var defer = $q.defer();
+
+                    AuthSvc.isLogged().then(function (logged) {
+                        if (logged) {
+                            $location.path('/');
+                        }
+
+                        defer.resolve(true);
+                    });
+                }
+            })
         })
         .when('/:controller/', {
             templateUrl: function (params) {

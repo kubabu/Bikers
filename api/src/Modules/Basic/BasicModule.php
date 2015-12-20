@@ -57,8 +57,8 @@ class BasicModule implements ModuleInterface
     }
 
     public function sanitizeInput($data) {
-        if (!is_array($data)) {
-            $data = array();
+        if (!is_object($data)) {
+            $data = new \stdClass();
         }
 
         return $data;
