@@ -80,6 +80,10 @@ if (!empty($matches[2])) {
 
     try {
         $db = new PDO('mysql:host=localhost;dbname=bikers', 'bikers', '7fm8QyCFxdcjxg4LqMGs');
+
+        if (DEBUG) {
+            $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
+        }
     } catch (Exception $e) {
         fail("Error: " . $e->getMessage());
         exit;

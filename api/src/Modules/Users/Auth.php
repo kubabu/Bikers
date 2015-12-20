@@ -58,15 +58,15 @@ class Auth extends BasicModule
      */
     public function post($data)
     {
-        $q = "UPDATE users_auth SET ip_addr = :ip, token = :token WHERE login = :login AND password = :password";
+        $q = "UPDATE users_auth SET IP = :ip, token = :token WHERE username = :username AND password = :password";
 
-        $token = md5($data->password . $data->login . mt_rand());
+        $token = md5($data->password . $data->username . mt_rand());
 
         if ($stmt = $this->db->prepare($q)) {
             $input = [
                 ':ip' => ip2long($this->getRequestIp()),
                 ':token' => $token,
-                ':login' => $data->login,
+                ':username' => $data->username,
                 ':password' => md5($data->password)
             ];
 
@@ -75,9 +75,9 @@ class Auth extends BasicModule
             if ($stmt->rowCount() > 0) {
                 return [$token];
             } else if (!empty($data->login) && !empty($data->password) && !empty($data->register)) {
-                $q = "SELECT id FROM users_auth WHERE login = :login";
+                $q = "SELECT id FROM users_auth WHERE username = :username";
                 $stmt = $this->db->prepare($q);
-                $stmt->execute([':login' => $data->login]);
+                $stmt->execute([':username' => $data->username]);
 
                 if (!count($stmt->fetchAll())) {
                     $q = "INSERT INTO users (first_name, last_name, date_create, date_update) VALUES ('', '', NOW(), NOW())";
@@ -86,7 +86,7 @@ class Auth extends BasicModule
                     if ($stmt->execute()) {
                         $input[':user_id'] = $this->db->lastInsertId();
 
-                        $q = "INSERT INTO users_auth (user_ID, ip_addr, token, login, password) VALUES (:user_id, :ip, :token, :login, :password)";
+                        $q = "INSERT INTO users_auth (user_ID, IP, token, username, password) VALUES (:user_id, :ip, :token, :username, :password)";
                         $stmt = $this->db->prepare($q);
 
                         if ($stmt->execute($input)) {

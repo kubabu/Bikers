@@ -8,8 +8,8 @@ angular.module('services.auth', []).service('AuthSvc', ['$q', '$http', '$rootSco
             login: window.localStorage.getItem('login') || ''
         }).then(function (res) {
            if (res.data.status) {
-               $rootScope.logged = res.data.data[0];
-               defer.resolve(res.data.data[0]);
+               $rootScope.logged = res.data.results[0];
+               defer.resolve(res.data.results[0]);
            } else {
                $rootScope.logged = false;
                defer.resolve(false);
@@ -19,10 +19,10 @@ angular.module('services.auth', []).service('AuthSvc', ['$q', '$http', '$rootSco
         return defer.promise;
     };
 
-    self.login = function (login, password, register) {
+    self.login = function (username, password, register) {
         var defer = $q.defer();
 
-        $http.post(url + 'users/auth', {login: login, password: password, register: register}).then(function (res) {
+        $http.post(url + 'users/auth', {username: username, password: password, register: register}).then(function (res) {
             if (res.data.status == false) {
                 window.localStorage.removeItem('Token');
             } else {
