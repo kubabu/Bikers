@@ -39,8 +39,8 @@ class Part extends BasicModule
                         $id = $this->db->lastInsertId();
                         $res[] = $id;
 
-                        $bikesParts = new BikeParts();
-                        $bikesParts->post([['bike_ID' => $part->_bike_ID, 'part_ID' => $id]]);
+                        $bikesParts = new BikeParts($this->db);
+                        $bikesParts->post((object) ['data' => [(object) ['bike_ID' => $part->_bike_ID, 'part_ID' => $id]]]);
                     }
                 }
             }
