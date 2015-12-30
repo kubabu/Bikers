@@ -11,7 +11,7 @@ DROP TABLE IF EXISTS `bikes`;
 CREATE TABLE IF NOT EXISTS `bikes` (
   `ID` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` tinytext COLLATE utf8_polish_ci NOT NULL,
-  `derscription` text COLLATE utf8_polish_ci,
+  `description` text COLLATE utf8_polish_ci,
   `user_ID` int(10) unsigned NOT NULL,
   `date_create` datetime NOT NULL,
   `date_update` datetime NOT NULL,
@@ -32,7 +32,7 @@ DROP TABLE IF EXISTS `bikes_comments`;
 CREATE TABLE IF NOT EXISTS `bikes_comments` (
   `ID` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `bike_ID` int(10) unsigned NOT NULL,
-  `user_ID` int(10) unsigned NOT NULL,
+  `user_ID` int(10) unsigned,
   `date_create` datetime NOT NULL,
   `value` tinytext COLLATE utf8_polish_ci NOT NULL,
   PRIMARY KEY (`ID`),
@@ -131,29 +131,29 @@ CREATE TABLE IF NOT EXISTS `users_routes` (
 
 
 ALTER TABLE `bikes`
-  ADD CONSTRAINT `bikes_ibfk_1` FOREIGN KEY (`user_ID`) REFERENCES `users` (`ID`) ON DELETE SET NULL;
+  ADD CONSTRAINT `bikes_ibfk_1` FOREIGN KEY (`user_ID`) REFERENCES `users` (`ID`) ON DELETE CASCADE;
 
 ALTER TABLE `bikes_parts`
-  ADD CONSTRAINT `bikes_parts_ibfk_1` FOREIGN KEY (`bike_ID`) REFERENCES `bikes` (`ID`) ON DELETE SET NULL,
-  ADD CONSTRAINT `bikes_parts_ibfk_2` FOREIGN KEY (`part_ID`) REFERENCES `parts` (`ID`) ON DELETE SET NULL;
+  ADD CONSTRAINT `bikes_parts_ibfk_1` FOREIGN KEY (`bike_ID`) REFERENCES `bikes` (`ID`) ON DELETE CASCADE,
+  ADD CONSTRAINT `bikes_parts_ibfk_2` FOREIGN KEY (`part_ID`) REFERENCES `parts` (`ID`) ON DELETE CASCADE;
 
-ALTER TABLE `bike_comments`
-  ADD CONSTRAINT `bike_comments_ibfk_1` FOREIGN KEY (`bike_ID`) REFERENCES `bikes` (`ID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `bike_comments_ibfk_2` FOREIGN KEY (`user_ID`) REFERENCES `users` (`ID`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE `bikes_comments`
+  ADD CONSTRAINT `bikes_comments_ibfk_1` FOREIGN KEY (`bike_ID`) REFERENCES `bikes` (`ID`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  ADD CONSTRAINT `bikes_comments_ibfk_2` FOREIGN KEY (`user_ID`) REFERENCES `users` (`ID`) ON DELETE SET NULL ON UPDATE NO ACTION;
 
 ALTER TABLE `messages`
-  ADD CONSTRAINT `messages_ibfk_1` FOREIGN KEY (`from`) REFERENCES `users` (`ID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `messages_ibfk_2` FOREIGN KEY (`to`) REFERENCES `users` (`ID`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `messages_ibfk_1` FOREIGN KEY (`from`) REFERENCES `users` (`ID`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  ADD CONSTRAINT `messages_ibfk_2` FOREIGN KEY (`to`) REFERENCES `users` (`ID`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 ALTER TABLE `route_landmarks`
-  ADD CONSTRAINT `route_landmarks_ibfk_1` FOREIGN KEY (`route_ID`) REFERENCES `routes` (`ID`) ON DELETE SET NULL ON UPDATE NO ACTION;
+  ADD CONSTRAINT `route_landmarks_ibfk_1` FOREIGN KEY (`route_ID`) REFERENCES `routes` (`ID`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 ALTER TABLE `users_auth`
-  ADD CONSTRAINT `users_auth_ibfk_1` FOREIGN KEY (`user_ID`) REFERENCES `users` (`ID`) ON DELETE SET NULL;
+  ADD CONSTRAINT `users_auth_ibfk_1` FOREIGN KEY (`user_ID`) REFERENCES `users` (`ID`) ON DELETE CASCADE;
 
 ALTER TABLE `users_routes`
-  ADD CONSTRAINT `users_routes_ibfk_3` FOREIGN KEY (`user_ID`) REFERENCES `users` (`ID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `users_routes_ibfk_1` FOREIGN KEY (`route_ID`) REFERENCES `routes` (`ID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `users_routes_ibfk_3` FOREIGN KEY (`user_ID`) REFERENCES `users` (`ID`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  ADD CONSTRAINT `users_routes_ibfk_1` FOREIGN KEY (`route_ID`) REFERENCES `routes` (`ID`) ON DELETE CASCADE ON UPDATE NO ACTION,
   ADD CONSTRAINT `users_routes_ibfk_2` FOREIGN KEY (`bike_ID`) REFERENCES `bikes` (`ID`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
