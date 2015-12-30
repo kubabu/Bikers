@@ -9,7 +9,7 @@
 namespace Modules\Bikes;
 
 
-use Modules\Modules\BasicModule;
+use Modules\Basic\BasicModule;
 
 class Bike extends BasicModule
 {
@@ -30,7 +30,7 @@ class Bike extends BasicModule
 
     public function post($data)
     {
-        // TODO: Implement post() method.
+        return [$this->userID];
     }
 
     public function put($data)

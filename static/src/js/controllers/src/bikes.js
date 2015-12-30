@@ -4,10 +4,12 @@ angular.module('controllers.bikes', []).controller('BikesCtrl', ['$scope', funct
     }];
 }]);
 
-angular.module('controllers.bikes').controller('BikesNewCtrl', ['$scope', function ($scope) {
+angular.module('controllers.bikes').controller('BikesNewCtrl', ['$scope', 'BikesSvc', function ($scope, BikesSvc) {
     $scope.bike = {};
     $scope.submit = function () {
+        BikesSvc.addBike($scope.bike).then(function () {
 
+        });
     }
 }]);
 

@@ -14,10 +14,30 @@ use Modules\ModuleInterface;
 class BasicModule implements ModuleInterface
 {
     protected $db;
+    protected $userID;
 
     public function __construct(\PDO $db)
     {
         $this->db = $db;
+
+        $headers = apache_request_headers();
+
+        if (array_key_exists('Token', $headers)) {
+            $this->token = $headers['Token'];
+        }
+
+        if (!empty($this->token)) {
+            $q = "SELECT user_ID FROM users_auth WHERE token = :token";
+            $stmt = $this->db->prepare($q);
+
+            if ($stmt->execute(array(':token' => $this->token))) {
+                $data = $stmt->fetch(\PDO::FETCH_OBJ);
+
+                if (property_exists($data, 'user_ID')) {
+                    $this->userID = $data->user_ID;
+                }
+            }
+        }
     }
 
     /**
