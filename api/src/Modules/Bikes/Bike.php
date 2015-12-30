@@ -39,7 +39,9 @@ class Bike extends BasicModule
             $stmt = $this->db->prepare($q);
 
             if ($stmt->execute($params)) {
-                $res[] = $stmt->fetch(\PDO::FETCH_OBJ);
+                if ($data = $stmt->fetch(\PDO::FETCH_OBJ)) {
+                    $res[] = $data;
+                }
             }
         }
 
