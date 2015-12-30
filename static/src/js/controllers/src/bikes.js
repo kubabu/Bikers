@@ -1,7 +1,9 @@
-angular.module('controllers.bikes', []).controller('BikesCtrl', ['$scope', function ($scope) {
-    $scope.bikes = [{
-        name: 'Unibike Cruzeo 29x11'
-    }];
+angular.module('controllers.bikes', []).controller('BikesCtrl', ['$scope', 'BikesSvc', function ($scope, BikesSvc) {
+    $scope.bikes = [];
+
+    BikesSvc.getBikes().then(function (bikes) {
+        $scope.bikes = bikes;
+    });
 }]);
 
 angular.module('controllers.bikes').controller('BikesNewCtrl', ['$scope', 'BikesSvc', function ($scope, BikesSvc) {
