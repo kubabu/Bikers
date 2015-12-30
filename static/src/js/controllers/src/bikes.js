@@ -24,3 +24,24 @@ angular.module('controllers.bikes').controller('BikesShowCtrl', ['$scope', 'Bike
         });
     }
 }]);
+
+angular.module('controllers.bikes').controller('BikesPartsNewCtrl', ['$scope', 'BikesSvc', 'PartsSvc', function ($scope, BikesSvc, PartsSvc) {
+    $scope.data = {
+        bike_ID: $scope.$parent.ID
+    };
+    $scope.parts = [];
+
+    PartsSvc.getParts().then(function (parts) {
+       $scope.parts = parts;
+
+        if ($scope.parts.length > 0) {
+            $scope.data.part_ID = $scope.parts[0].ID;
+        }
+    });
+
+    $scope.submit = function () {
+        BikesSvc.addBikePart($scope.data).then(function () {
+
+        });
+    }
+}]);

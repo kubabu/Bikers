@@ -1,0 +1,11 @@
+<div class="row">
+    <div class="col-xs-12" ng-controller="BikesPartsNewCtrl">
+        <h1>Dobierz część</h1>
+        <div class="form-group">
+            <select id="bike_parts_id" class="form-control" ng-model="data.part_ID" ng-options="part.ID as part.name + ' - ' + part.description for part in parts"></select>
+        </div>
+        <div class="form-group">
+            <button class="btn btn-primary" ng-click="submit()">Zapisz</button>
+        </div>
+    </div>
+</div>

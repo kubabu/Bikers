@@ -30,7 +30,9 @@ class Parts extends BasicModule
                     ':bike' => $data->bike_ID,
                     ':part' => $data->part_ID
                 ))) {
-                    $res[] = $this->db->lastInsertId();
+                    $res[] = true;
+                } else {
+                    $res[] = false;
                 }
             }
         }
