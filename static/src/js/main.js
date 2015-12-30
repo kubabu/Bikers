@@ -71,5 +71,14 @@ app.config(function ($routeProvider, $locationProvider, $httpProvider) {
             },
             resolve: resolve
         })
+        .when('/:controller/:action/:id/', {
+            controller: ['$scope', '$routeParams', function ($scope, $routeParams) {
+                $scope.ID = $routeParams.id
+            }],
+            templateUrl: function (params) {
+                return 'src/templates/' + params.controller + '/' + params.action + '.html';
+            },
+            resolve: resolve
+        })
         .otherwise({redirectTo:'/'});
 });

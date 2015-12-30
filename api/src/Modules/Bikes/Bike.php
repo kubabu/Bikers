@@ -22,10 +22,23 @@ class Bike extends BasicModule
     {
         $res = [];
 
-        if (!empty($this->userID)) {
-            $stmt = $this->db->prepare("SELECT ID, name, description FROM bikes WHERE user_ID = :user");
+        $q = "SELECT ID, name, description FROM bikes";
+        $wheres = ['user_ID = :user'];
+        $params = [':user' => $this->userID];
 
-            if ($stmt->execute(array(':user' => $this->userID))) {
+        if (property_exists($data, 'id') && !empty($data->id)) {
+            $wheres[] = 'ID = :id';
+            $params[':id'] = $data->id;
+        }
+
+        if (count($wheres) > 0) {
+            $q .= " WHERE " . implode(' AND ', $wheres);
+        }
+
+        if (!empty($this->userID)) {
+            $stmt = $this->db->prepare($q);
+
+            if ($stmt->execute($params)) {
                 $res[] = $stmt->fetch(\PDO::FETCH_OBJ);
             }
         }
