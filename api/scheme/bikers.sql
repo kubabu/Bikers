@@ -23,7 +23,6 @@ DROP TABLE IF EXISTS `bikes_parts`;
 CREATE TABLE IF NOT EXISTS `bikes_parts` (
   `bike_ID` int(10) unsigned NOT NULL,
   `part_ID` int(10) unsigned NOT NULL,
-  `description` text COLLATE utf8_polish_ci NOT NULL,
   KEY `bike_ID` (`bike_ID`,`part_ID`),
   KEY `part_ID` (`part_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
