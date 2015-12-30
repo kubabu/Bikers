@@ -15,13 +15,12 @@ angular.module('controllers.bikes').controller('BikesNewCtrl', ['$scope', 'Bikes
     }
 }]);
 
-angular.module('controllers.bikes').controller('BikesShowCtrl', ['$scope', function ($scope) {
-    $scope.bike = {
-        name:"Romet Osa",
-        description:"Składak z koralikami na kołach",
-        parts:[
-            {name:"koralik1"},
-            {name:"koralik2"}
-        ]
-    };
+angular.module('controllers.bikes').controller('BikesShowCtrl', ['$scope', 'BikesSvc', function ($scope, BikesSvc) {
+    $scope.bike = {};
+
+    if (angular.isDefined($scope.$parent.ID) && !isNaN($scope.$parent.ID)) {
+        BikesSvc.getBikes({id: $scope.$parent.ID}).then(function (bikes) {
+            $scope.bike = bikes[0];
+        });
+    }
 }]);
