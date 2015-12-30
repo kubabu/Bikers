@@ -59,10 +59,10 @@ class BasicModule implements ModuleInterface
     }
 
     /**
-     * @param $data - array of assoc arrays with data to INSERT
+     * @param $input - array of assoc arrays with data to INSERT
      * @return array with new ids
      */
-    public function post($data)
+    public function post($input)
     {
         // TODO: Implement post() method.
     }

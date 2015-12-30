@@ -1,5 +1,7 @@
 angular.module('controllers.parts', []).controller('PartsNewCtrl', ['$scope', 'PartsSvc', function ($scope, PartsSvc) {
-    $scope.part = {};
+    $scope.part = {
+        _bike_ID: $scope.$parent.ID
+    };
     $scope.submit = function () {
         PartsSvc.addPart($scope.part).then(function () {
 
