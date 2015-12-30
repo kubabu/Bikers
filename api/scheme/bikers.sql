@@ -72,8 +72,8 @@ CREATE TABLE IF NOT EXISTS `routes` (
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci AUTO_INCREMENT=1 ;
 
-DROP TABLE IF EXISTS `route_comments`;
-CREATE TABLE IF NOT EXISTS `route_comments` (
+DROP TABLE IF EXISTS `routes_comments`;
+CREATE TABLE IF NOT EXISTS `routes_comments` (
   `ID` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `route_ID` int(10) unsigned NOT NULL,
   `user_ID` int(10) unsigned NOT NULL,
@@ -82,8 +82,8 @@ CREATE TABLE IF NOT EXISTS `route_comments` (
   KEY `user_ID` (`user_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci AUTO_INCREMENT=1 ;
 
-DROP TABLE IF EXISTS `route_landmarks`;
-CREATE TABLE IF NOT EXISTS `route_landmarks` (
+DROP TABLE IF EXISTS `routes_landmarks`;
+CREATE TABLE IF NOT EXISTS `routes_landmarks` (
   `ID` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `route_ID` int(10) unsigned NOT NULL,
   `value` tinytext COLLATE utf8_polish_ci NOT NULL,
@@ -145,8 +145,8 @@ ALTER TABLE `messages`
   ADD CONSTRAINT `messages_ibfk_1` FOREIGN KEY (`from`) REFERENCES `users` (`ID`) ON DELETE CASCADE ON UPDATE NO ACTION,
   ADD CONSTRAINT `messages_ibfk_2` FOREIGN KEY (`to`) REFERENCES `users` (`ID`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
-ALTER TABLE `route_landmarks`
-  ADD CONSTRAINT `route_landmarks_ibfk_1` FOREIGN KEY (`route_ID`) REFERENCES `routes` (`ID`) ON DELETE CASCADE ON UPDATE NO ACTION;
+ALTER TABLE `routes_landmarks`
+  ADD CONSTRAINT `routes_landmarks_ibfk_1` FOREIGN KEY (`route_ID`) REFERENCES `routes` (`ID`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 ALTER TABLE `users_auth`
   ADD CONSTRAINT `users_auth_ibfk_1` FOREIGN KEY (`user_ID`) REFERENCES `users` (`ID`) ON DELETE CASCADE;
