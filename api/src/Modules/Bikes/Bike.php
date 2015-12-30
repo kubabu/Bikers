@@ -26,13 +26,13 @@ class Bike extends BasicModule
         $wheres = ['user_ID = :user'];
         $params = [':user' => $this->userID];
 
-        if (array_key_exists('id', $data) && !empty($data['id'])) {
+        if (property_exists($data, 'id') && !empty($data->id)) {
             $wheres[] = 'ID = :id';
-            $params[':id'] = $data['id'];
+            $params[':id'] = $data->id;
         }
 
         if (count($wheres) > 0) {
-            $q .= "WHERE" . implode(' AND ', $wheres);
+            $q .= " WHERE " . implode(' AND ', $wheres);
         }
 
         if (!empty($this->userID)) {

@@ -4,7 +4,7 @@ angular.module('services.bikes', []).service('BikesSvc', ['$http', '$q', 'url', 
     self.getBikes = function(filters) {
         var defer = $q.defer();
 
-        $http.get(url + 'bikes/', angular.extend({}, filters)).then(function (res) {
+        $http.get(url + 'bikes/', {params: angular.extend({}, filters)}).then(function (res) {
             if (res.data.status) {
                 defer.resolve(res.data.results);
             } else {

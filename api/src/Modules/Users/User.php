@@ -25,13 +25,13 @@ class User extends BasicModule
         $params = [];
         $wheres = [];
 
-        if (array_key_exists('id', $data) && !empty($data['id'])) {
-            $wheres[] = 'id = :id';
-            $params[':id'] = $data['id'];
+        if (property_exists($data, 'id') && !empty($data->id)) {
+            $wheres[] = 'ID = :id';
+            $params[':id'] = $data->id;
         }
 
         if (count($wheres) > 0) {
-            $q .= "WHERE" . implode(' AND ', $wheres);
+            $q .= " WHERE " . implode(' AND ', $wheres);
         }
 
         if ($stmt = $this->db->prepare($q)) {
