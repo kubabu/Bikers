@@ -33,7 +33,7 @@ class BasicModule implements ModuleInterface
             if ($stmt->execute(array(':token' => $this->token))) {
                 $data = $stmt->fetch(\PDO::FETCH_OBJ);
 
-                if (property_exists($data, 'user_ID')) {
+                if (is_object($data) && property_exists($data, 'user_ID')) {
                     $this->userID = $data->user_ID;
                 }
             }
