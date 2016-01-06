@@ -49,6 +49,9 @@ class Route extends BasicModule
         $usersRoutes = new Routes($this->db);
         $stmt = $this->db->prepare($q);
 
+        var_dump($input);
+        var_dump($input->data);
+
         foreach ($input->data as $route) {
             if ($stmt->execute(array(
                 ':name' => $route->name,
