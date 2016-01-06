@@ -36,7 +36,7 @@ class Parts extends BasicModule
         return $res;
     }
 
-    public function get($input) {
+    public function get($data) {
         $res = [];
 
         if (!empty($this->userID)) {
@@ -44,12 +44,10 @@ class Parts extends BasicModule
 
             $stmt = $this->db->prepare($q);
 
-            foreach ($input->data as $data) {
-                if ($stmt->execute(array(
-                    ':id' => $data->bike_ID
-                ))) {
-                    $res[] = $stmt->fetchAll(\PDO::FETCH_OBJ);
-                }
+            if ($stmt->execute(array(
+                ':id' => $data->bike_ID
+            ))) {
+                $res = $stmt->fetchAll(\PDO::FETCH_OBJ);
             }
         }
 
