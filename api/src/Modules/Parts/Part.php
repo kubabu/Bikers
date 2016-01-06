@@ -47,6 +47,7 @@ class Part extends BasicModule
         $res = [];
 
         $this->db->beginTransaction();
+        $bikesParts = new BikeParts($this->db);
 
         try {
             if (!empty($this->userID)) {
@@ -62,7 +63,6 @@ class Part extends BasicModule
                         $id = $this->db->lastInsertId();
                         $res[] = $id;
 
-                        $bikesParts = new BikeParts($this->db);
                         $bikesParts->post((object) ['data' => [(object) ['bike_ID' => $part->_bike_ID, 'part_ID' => $id]]]);
                     }
                 }

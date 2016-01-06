@@ -35,4 +35,24 @@ class Parts extends BasicModule
 
         return $res;
     }
+
+    public function get($input) {
+        $res = [];
+
+        if (!empty($this->userID)) {
+            $q = "SELECT p.* FROM parts p INNER JOIN bikes_parts bp ON p.ID = bp.part_ID AND bp.bike_id = :id";
+
+            $stmt = $this->db->prepare($q);
+
+            foreach ($input->data as $data) {
+                if ($stmt->execute(array(
+                    ':id' => $data->bike_ID
+                ))) {
+                    $res[] = $stmt->fetchAll(\PDO::FETCH_OBJ);
+                }
+            }
+        }
+
+        return $res;
+    }
 }

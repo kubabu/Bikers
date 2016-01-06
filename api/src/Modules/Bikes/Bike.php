@@ -25,6 +25,7 @@ class Bike extends BasicModule
         $q = "SELECT ID, name, description FROM bikes";
         $wheres = ['user_ID = :user'];
         $params = [':user' => $this->userID];
+        $bikeParts = new Parts($this->db);
 
         if (property_exists($data, 'id') && !empty($data->id)) {
             $wheres[] = 'ID = :id';
@@ -40,7 +41,13 @@ class Bike extends BasicModule
 
             if ($stmt->execute($params)) {
                 if ($data = $stmt->fetchAll(\PDO::FETCH_OBJ)) {
-                    $res = $data;
+                    foreach ($data as $bike) {
+                        if (!empty($parts = $bikeParts->get((object) ['data' => [(object) ['bike_ID' => $bike->ID]]]))) {
+                            $bike->parts = $parts[0];
+                        }
+
+                        $res[] = $bike;
+                    }
                 }
             }
         }
