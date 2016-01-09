@@ -49,18 +49,15 @@ class Route extends BasicModule
         $usersRoutes = new Routes($this->db);
         $stmt = $this->db->prepare($q);
 
-        var_dump($input);
-        var_dump($input->data);
-
         foreach ($input->data as $route) {
             if ($stmt->execute(array(
                 ':name' => $route->name,
-                ':from' => $route->from,
-                ':to' => $this->to
+                ':from' => $route->from_dst,
+                ':to' => $route->to_dst
             ))) {
                 $route->ID = $this->db->lastInsertId();
 
-                if (!empty($this->userID)) {
+                if (!empty($this->user_ID)) {
                     $usersRoutes->post((object) ['data' => [$route]]);
                 }
 

@@ -22,13 +22,13 @@ class Routes extends BasicModule
         VALUES (:user, :route, :bike, :ride_date, :ride_duration, NOW())";
         $routes = new Route($this->db);
 
-        if (!empty($this->userID)) {
+        if (!empty($this->user_ID)) {
             $stmt = $this->db->prepare($q);
 
             foreach ($input->data as $route) {
                 if (!empty($route->ID) && !empty($route->bike_ID)) {
                     if ($stmt->execute([
-                        ':user' => $this->userID,
+                        ':user' => $this->user_ID,
                         ':route' => $route->ID,
                         ':bike' => $route->bike_ID,
                         ':ride_date' => $route->date_of_ride,
@@ -50,10 +50,10 @@ class Routes extends BasicModule
 
         $bikes = new Bike($this->db);
 
-        if (!empty($this->userID)) {
+        if (!empty($this->user_ID)) {
             $q = "SELECT r.ID, r.name, r.from_dst, r.to_dst, ur.date_of_ride, ur.duration_of_ride, ur.bike_ID FROM routes r INNER JOIN users_routes ur ON r.ID = ur.route_ID ";
             $wheres = ['user_ID = :user_id'];
-            $params = [':user_id' => $this->userID];
+            $params = [':user_id' => $this->user_ID];
 
             if (property_exists($data, 'id') && !empty($data->id)) {
                 $wheres[] = 'ur.route_ID = :id';

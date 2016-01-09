@@ -24,7 +24,7 @@ class Bike extends BasicModule
 
         $q = "SELECT ID, name, description FROM bikes";
         $wheres = ['user_ID = :user'];
-        $params = [':user' => $this->userID];
+        $params = [':user' => $this->user_ID];
         $bikeParts = new Parts($this->db);
 
         if (property_exists($data, 'id') && !empty($data->id)) {
@@ -36,7 +36,7 @@ class Bike extends BasicModule
             $q .= " WHERE " . implode(' AND ', $wheres);
         }
 
-        if (!empty($this->userID)) {
+        if (!empty($this->user_ID)) {
             $stmt = $this->db->prepare($q);
 
             if ($stmt->execute($params)) {
@@ -64,7 +64,7 @@ class Bike extends BasicModule
     {
         $res = [];
 
-        if (!empty($this->userID)) {
+        if (!empty($this->user_ID)) {
             $q = "INSERT INTO bikes (name, description, user_ID, date_create, date_update) VALUES (:name, :desc, :user, NOW(), NOW())";
 
             $stmt = $this->db->prepare($q);
@@ -73,7 +73,7 @@ class Bike extends BasicModule
                 if ($stmt->execute(array(
                     ':name' => $bike->name,
                     ':desc' => $bike->description,
-                    ':user' => $this->userID
+                    ':user' => $this->user_ID
                 ))) {
                     $res[] = $this->db->lastInsertId();
                 }

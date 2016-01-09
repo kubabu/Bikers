@@ -14,7 +14,7 @@ use Modules\ModuleInterface;
 class BasicModule implements ModuleInterface
 {
     protected $db;
-    protected $userID;
+    protected $user_ID;
 
     public function __construct(\PDO $db)
     {
@@ -34,7 +34,7 @@ class BasicModule implements ModuleInterface
                 $data = $stmt->fetch(\PDO::FETCH_OBJ);
 
                 if (property_exists($data, 'user_ID')) {
-                    $this->userID = $data->user_ID;
+                    $this->user_ID = $data->user_ID;
                 }
             }
         }
