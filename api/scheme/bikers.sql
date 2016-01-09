@@ -42,14 +42,14 @@ CREATE TABLE IF NOT EXISTS `bikes_comments` (
 DROP TABLE IF EXISTS `messages`;
 CREATE TABLE IF NOT EXISTS `messages` (
   `ID` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `from` int(11) unsigned NOT NULL,
-  `to` int(11) unsigned NOT NULL,
+  `from_user` int(11) unsigned NOT NULL,
+  `to_user` int(11) unsigned NOT NULL,
   `value` text COLLATE utf8_polish_ci NOT NULL,
   `date_create` datetime NOT NULL,
   `date_update` datetime NOT NULL,
   PRIMARY KEY (`ID`),
-  KEY `from` (`from`,`to`),
-  KEY `to` (`to`)
+  KEY `from_user` (`from_user`,`to_user`),
+  KEY `to_user` (`to_user`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci AUTO_INCREMENT=1 ;
 
 DROP TABLE IF EXISTS `parts`;
@@ -66,8 +66,8 @@ CREATE TABLE IF NOT EXISTS `routes` (
   `name` tinytext COLLATE utf8_polish_ci,
   `date_create` datetime NOT NULL,
   `date_update` datetime NOT NULL,
-  `from` tinytext COLLATE utf8_polish_ci NOT NULL,
-  `to` tinytext COLLATE utf8_polish_ci NOT NULL,
+  `from_dst` tinytext COLLATE utf8_polish_ci NOT NULL,
+  `to_dst` tinytext COLLATE utf8_polish_ci NOT NULL,
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci AUTO_INCREMENT=1 ;
 
@@ -121,7 +121,7 @@ CREATE TABLE IF NOT EXISTS `users_routes` (
   `route_ID` int(10) unsigned NOT NULL,
   `bike_ID` int(10) unsigned NOT NULL,
   `date_of_ride` datetime NOT NULL,
-  `date_created` datetime NOT NULL,
+  `date_create` datetime NOT NULL,
   `duration_of_ride` int(11) NOT NULL,
   PRIMARY KEY (`ID`),
   KEY `user_ID` (`user_ID`,`route_ID`,`bike_ID`),
@@ -142,8 +142,8 @@ ALTER TABLE `bikes_comments`
   ADD CONSTRAINT `bikes_comments_ibfk_2` FOREIGN KEY (`user_ID`) REFERENCES `users` (`ID`) ON DELETE SET NULL ON UPDATE NO ACTION;
 
 ALTER TABLE `messages`
-  ADD CONSTRAINT `messages_ibfk_1` FOREIGN KEY (`from`) REFERENCES `users` (`ID`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  ADD CONSTRAINT `messages_ibfk_2` FOREIGN KEY (`to`) REFERENCES `users` (`ID`) ON DELETE CASCADE ON UPDATE NO ACTION;
+  ADD CONSTRAINT `messages_ibfk_1` FOREIGN KEY (`from_user`) REFERENCES `users` (`ID`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  ADD CONSTRAINT `messages_ibfk_2` FOREIGN KEY (`to_user`) REFERENCES `users` (`ID`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 ALTER TABLE `routes_landmarks`
   ADD CONSTRAINT `routes_landmarks_ibfk_1` FOREIGN KEY (`route_ID`) REFERENCES `routes` (`ID`) ON DELETE CASCADE ON UPDATE NO ACTION;

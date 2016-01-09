@@ -16,7 +16,7 @@ class Parts extends BasicModule
     public function post($input) {
         $res = [];
 
-        if (!empty($this->userID)) {
+        if (!empty($this->user_ID)) {
             $q = "INSERT INTO bikes_parts (bike_ID, part_ID) VALUES (:bike, :part)";
 
             $stmt = $this->db->prepare($q);
@@ -39,7 +39,7 @@ class Parts extends BasicModule
     public function get($data) {
         $res = [];
 
-        if (!empty($this->userID)) {
+        if (!empty($this->user_ID)) {
             $q = "SELECT p.* FROM parts p INNER JOIN bikes_parts bp ON p.ID = bp.part_ID AND bp.bike_id = :id";
 
             $stmt = $this->db->prepare($q);

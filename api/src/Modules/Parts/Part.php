@@ -50,7 +50,7 @@ class Part extends BasicModule
         $bikesParts = new BikeParts($this->db);
 
         try {
-            if (!empty($this->userID)) {
+            if (!empty($this->user_ID)) {
                 $q = "INSERT INTO parts (name, description) VALUES (:name, :desc)";
 
                 $stmt = $this->db->prepare($q);
