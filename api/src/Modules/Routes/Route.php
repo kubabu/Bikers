@@ -10,6 +10,7 @@ namespace Modules\Routes;
 
 
 use Modules\Basic\BasicModule;
+use Modules\Bikes\Bike;
 use Modules\Users\Routes;
 
 class Route extends BasicModule
@@ -20,6 +21,7 @@ class Route extends BasicModule
         $q = "SELECT ID, name, from_dst, to_dst FROM routes";
         $wheres = [];
         $params = [];
+        $routesLandmarks = new Landmarks($this->db);
 
         if (property_exists($data, 'id') && !empty($data->id)) {
             $wheres[] = 'ID = :id';
@@ -34,7 +36,11 @@ class Route extends BasicModule
 
         if ($stmt->execute($params)) {
             if ($routes = $stmt->fetchAll(\PDO::FETCH_OBJ)) {
-                $res = $routes;
+                if (property_exists($data, '_landmarks') && $data->_landmarks) {
+                    foreach ($routes as $route) {
+                        $route->landmarks = $routesLandmarks->get((object)['id' => $route->ID]);
+                    }
+                }
             }
         }
 
@@ -47,6 +53,7 @@ class Route extends BasicModule
         $q = "INSERT INTO routes (name, from_dst, to_dst, date_create, date_update) VALUES (:name, :from, :to, NOW(), NOW())";
 
         $usersRoutes = new Routes($this->db);
+        $routesLandmarks = new Landmarks($this->db);
         $stmt = $this->db->prepare($q);
 
         foreach ($input->data as $route) {
@@ -59,6 +66,11 @@ class Route extends BasicModule
 
                 if (!empty($this->user_ID)) {
                     $usersRoutes->post((object) ['data' => [$route]]);
+                }
+
+                foreach ($route->landmarks as $landmark) {
+                    $landmark->route_ID = $route->ID;
+                    $routesLandmarks->post((object) ['data' => [$landmark]]);
                 }
 
                 $res[] = $route->ID;

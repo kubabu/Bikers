@@ -11,6 +11,7 @@ namespace Modules\Users;
 
 use Modules\Basic\BasicModule;
 use Modules\Bikes\Bike;
+use Modules\Routes\Landmarks;
 use Modules\Routes\Route;
 
 class Routes extends BasicModule
@@ -48,7 +49,8 @@ class Routes extends BasicModule
     public function get($data) {
         $res = [];
 
-        $bikes = new Bike($this->db);
+        $bikesBike = new Bike($this->db);
+        $routesLandmarks = new Landmarks($this->db);
 
         if (!empty($this->user_ID)) {
             $q = "SELECT r.ID, r.name, r.from_dst, r.to_dst, ur.date_of_ride, ur.duration_of_ride, ur.bike_ID FROM routes r INNER JOIN users_routes ur ON r.ID = ur.route_ID ";
@@ -74,10 +76,17 @@ class Routes extends BasicModule
             if ($stmt->execute($params)) {
                 if ($routes = $stmt->fetchAll(\PDO::FETCH_OBJ)) {
                     foreach ($routes as $route) {
-                        $data->bike = $bikes->get((object) ['id' => $route->bike_ID]);
+                        $bikes = $bikesBike->get((object) ['id' => $route->bike_ID]);
+                        if (count($bikes) > 0) {
+                            $route->bike = $bikes[0];
+                        }
                         unset($data->bike_ID);
 
-                        $res[] = $data->bike;
+                        if (property_exists($data, '_landmarks') && $data->_landmarks) {
+                            $route->landmarks = $routesLandmarks->get((object) ['id' => $route->ID]);
+                        }
+
+                        $res[] = $route;
                     }
                 }
             }

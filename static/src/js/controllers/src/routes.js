@@ -1,7 +1,7 @@
 angular.module('controllers.routes', []).controller('RoutesCtrl', ['$scope', 'RoutesSvc', function ($scope, RoutesSvc) {
     $scope.routes = [];
 
-    RoutesSvc.getRoutes().then(function (routes) {
+    RoutesSvc.getUserRoutes().then(function (routes) {
         $scope.routes = routes;
     });
 }]);
@@ -31,7 +31,7 @@ angular.module('controllers.routes').controller('RoutesShowCtrl', ['$scope', 'Ro
     $scope.route = {};
 
     if (angular.isDefined($scope.$parent.ID) && !isNaN($scope.$parent.ID)) {
-        RoutesSvc.getRoutes({id: $scope.$parent.ID}).then(function (routes) {
+        RoutesSvc.getUserRoutes({id: $scope.$parent.ID, _landmarks: true}).then(function (routes) {
             $scope.route = routes[0];
         });
     }

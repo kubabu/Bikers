@@ -87,9 +87,8 @@ CREATE TABLE IF NOT EXISTS `routes_landmarks` (
   `ID` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `route_ID` int(10) unsigned NOT NULL,
   `value` tinytext COLLATE utf8_polish_ci NOT NULL,
-  `order` int(11) NOT NULL,
+  `landmark_order` int(11) NOT NULL,
   PRIMARY KEY (`ID`),
-  UNIQUE KEY `order` (`order`),
   KEY `route_ID` (`route_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci AUTO_INCREMENT=1 ;
 
