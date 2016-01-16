@@ -22,6 +22,7 @@ class Route extends BasicModule
         $wheres = [];
         $params = [];
         $routesLandmarks = new Landmarks($this->db);
+        $routesComments = new Comments($this->db);
 
         if (property_exists($data, 'id') && !empty($data->id)) {
             $wheres[] = 'ID = :id';

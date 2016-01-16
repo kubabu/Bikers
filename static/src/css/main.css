@@ -1,3 +1,7 @@
 body {
     padding-top: 70px
 }
+
+.panel-footer + .panel-body {
+    border-top: 1px solid #ddd;
+}

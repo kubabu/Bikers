@@ -12,6 +12,7 @@ namespace Modules\Users;
 use Modules\Basic\BasicModule;
 use Modules\Bikes\Bike;
 use Modules\Routes\Landmarks;
+use Modules\Routes\Comments;
 use Modules\Routes\Route;
 
 class Routes extends BasicModule
@@ -51,6 +52,7 @@ class Routes extends BasicModule
 
         $bikesBike = new Bike($this->db);
         $routesLandmarks = new Landmarks($this->db);
+        $routesComments = new Comments($this->db);
 
         if (!empty($this->user_ID)) {
             $q = "SELECT r.ID, r.name, r.from_dst, r.to_dst, ur.date_of_ride, ur.duration_of_ride, ur.bike_ID FROM routes r INNER JOIN users_routes ur ON r.ID = ur.route_ID ";
@@ -83,7 +85,11 @@ class Routes extends BasicModule
                         unset($data->bike_ID);
 
                         if (property_exists($data, '_landmarks') && $data->_landmarks) {
-                            $route->landmarks = $routesLandmarks->get((object) ['id' => $route->ID]);
+                            $route->landmarks = $routesLandmarks->get((object) ['route_ID' => $route->ID]);
+                        }
+
+                        if (property_exists($data, '_comments') && $data->_comments) {
+                            $route->comments = $routesComments->get((object) ['route_ID' => $route->ID]);
                         }
 
                         $res[] = $route;

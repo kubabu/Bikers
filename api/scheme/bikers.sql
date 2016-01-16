@@ -76,6 +76,7 @@ CREATE TABLE IF NOT EXISTS `routes_comments` (
   `ID` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `route_ID` int(10) unsigned NOT NULL,
   `user_ID` int(10) unsigned NOT NULL,
+  `date_create` datetime NOT NULL,
   `value` text COLLATE utf8_polish_ci NOT NULL,
   PRIMARY KEY (`ID`),
   KEY `route_ID` (`route_ID`),
