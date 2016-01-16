@@ -38,7 +38,13 @@ class Route extends BasicModule
             if ($routes = $stmt->fetchAll(\PDO::FETCH_OBJ)) {
                 if (property_exists($data, '_landmarks') && $data->_landmarks) {
                     foreach ($routes as $route) {
-                        $route->landmarks = $routesLandmarks->get((object)['id' => $route->ID]);
+                        $route->landmarks = $routesLandmarks->get((object)['route_ID' => $route->ID]);
+                    }
+                }
+
+                if (property_exists($data, '_comments') && $data->_comments) {
+                    foreach ($routes as $route) {
+                        $route->comments = $routesComments->get((object)['route_ID' => $route->ID]);
                     }
                 }
             }
