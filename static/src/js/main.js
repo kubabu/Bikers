@@ -8,7 +8,7 @@ if (window.location.origin !== 'null') {
 
 document.getElementsByTagName('head')[0].appendChild(base);
 
-var app = angular.module('bikersApp', ['ngRoute', 'services', 'controllers']);
+var app = angular.module('bikersApp', ['ngRoute', 'services', 'controllers', 'ui.bootstrap']);
 
 app.constant('url', 'http://localhost/bikers/api/v1/'); //default api path
 

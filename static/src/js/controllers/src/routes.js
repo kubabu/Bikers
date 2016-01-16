@@ -11,7 +11,11 @@ angular.module('controllers.routes').controller('RoutesNewCtrl', ['$scope', 'Rou
         landmarks: [],
         comments: []
     };
+    $scope.route.duration_of_ride = new Date(0);
     $scope.bikes = [];
+
+    $scope._set_date = new Date();
+    $scope._set_hour = new Date();
 
     BikesSvc.getBikes().then(function (bikes) {
         $scope.bikes = bikes;
@@ -22,6 +26,14 @@ angular.module('controllers.routes').controller('RoutesNewCtrl', ['$scope', 'Rou
     });
 
     $scope.submit = function () {
+            $scope.route.date_of_ride = moment($scope._set_date).format("YYYY-MM-DD ") +  moment($scope._set_hour).format("HH:mm:ss");
+            $scope.route.duration_of_ride = $scope.route.duration_of_ride.getMinutes();
+
+            console.log("var dumpg");
+            console.log("duration", $scope.route.duration_of_ride);
+            console.log("date of ride", $scope.route.date_of_ride);
+
+
         RoutesSvc.addRoute($scope.route).then(function () {
 
         });

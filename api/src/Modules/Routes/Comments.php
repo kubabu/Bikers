@@ -4,6 +4,7 @@ namespace Modules\Routes;
 
 
 use Modules\Basic\BasicModule;
+use Modules\Users\User;
 
 class Comments extends BasicModule
 {
@@ -30,6 +31,7 @@ class Comments extends BasicModule
     public function get($data)
     {
         $res = [];
+        $user = new User($this->db);
 
         $q = "SELECT `route_ID`, `user_ID`, `value`, `date_create` FROM routes_comments";
         $wheres = [];
@@ -59,8 +61,8 @@ class Comments extends BasicModule
         $stmt = $this->db->prepare($q);
 
         if ($stmt->execute($params)) {
-            if ($landmarks = $stmt->fetchAll(\PDO::FETCH_OBJ)) {
-                $res = $landmarks;
+            if ($comments = $stmt->fetchAll(\PDO::FETCH_OBJ)) {
+                $res = $comments;
             }
         }
 
