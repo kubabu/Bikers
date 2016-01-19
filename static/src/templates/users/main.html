@@ -1,21 +1,35 @@
 <!-- Informacje o użytkowniku -->
 <div class="row">
     <div class="col-xs-12" ng-controller="UsersCtrl">
-        <table class="table table-responsive" id="usersBikes">
-            <tr><th> Rower </th><th>Opis</th></tr>
-            <tr ng-repeat="bike in user.bikes">
-                <td>{{ bike.name }}</td><td>{{ bike.description }}</td>
-            </tr>
-        </table>
-
-        <table class="table table-responsive" id="usersRoutes">
-            <tr><th> Trasa </th><th>Rower</th><th>Data</th><th>Czas</th></tr>
-            <tr ng-repeat="route in user.routes">
-                <td>{{ route.name }}</td>
-                <td>{{ route.bike.name }}</td>
-                <td>{{ route.date_of_ride }}</td>
-                <td>{{ route.duration_of_ride }}</td>
-            </tr>
-        </table>
+        <div class="row">
+            <div class="col-xs-4 col-md-2"><img src="src/images/user.png" alt="Zdjęcie użytkownika" class="img-responsive user-foto"></div>
+            <div class="col-xs-8 col-md-10">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h1 class="panel-title">Twoje dane</h1>
+                    </div>
+                    <div class="panel-body">
+                        <div>
+                            <h4>Imię i nazwisko</h4>
+                            <div class="well">
+                                {{user.first_name}} {{user.last_name}}
+                            </div>
+                            <div class="text-right">
+                                <a ng-href="#/users/edit/{{user.ID}}" class="btn btn-primary">Edytuj</a>
+                            </div>
+                        </div>
+                        <div ng-if="routes.length > 0">
+                            <h4>Ostatenie trasy</h4>
+                            <table class="table table-hover">
+                                <tr ng-repeat="route in routes">
+                                    <td class="col-md-8">{{$index + 1}}. {{route.name}}</td>
+                                    <td class="col-md-4 text-right"><a class="btn btn-primary" ng-href="#/routes/show/{{route.ID}}">Zobacz</a></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
