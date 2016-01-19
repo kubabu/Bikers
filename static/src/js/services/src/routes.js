@@ -75,10 +75,10 @@ angular.module('services.routes', []).service('RoutesSvc', ['$http', '$q', 'url'
         return defer.promise;
     };
 
-    self.addRoutePart = function (data) {
+    self.addRouteComment = function (data) {
         var defer = $q.defer();
 
-        $http.post(url + 'routes/parts/', {data: [data]}).then(function (res) {
+        $http.post(url + 'routes/comments/', {data: [data]}).then(function (res) {
             if (res.data.status) {
                 defer.resolve(res.data.results);
             } else {
@@ -87,7 +87,7 @@ angular.module('services.routes', []).service('RoutesSvc', ['$http', '$q', 'url'
         });
 
         return defer.promise;
-    }
+    };
 
     return self;
 }]);

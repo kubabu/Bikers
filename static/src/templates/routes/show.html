@@ -28,12 +28,25 @@
                                         username tralala
                                     </div>
                                     <div class="col-md-6 text-right">
-                                        {{ comment.date_create | date }}
+                                        {{ comment.date_create | date : 'd MMM H:m' }}
                                     </div>
                                 </div>
                             </div>
                             <div class="panel-body">
                                 <p>{{comment.value}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                        Dodaj nowy komentarz
+                        </div>
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <textarea type="text" class="form-control" ng-model="new_comment.value"></textarea>
+                            </div>
+                            <div>
+                                <button class="btn btn-primary" ng-click="addComment()">Zapisz</button>
                             </div>
                         </div>
                     </div>

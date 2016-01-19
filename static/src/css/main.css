@@ -5,3 +5,7 @@ body {
 .panel-footer + .panel-body {
     border-top: 1px solid #ddd;
 }
+
+textarea {
+    resize:vertical;
+}

@@ -18,7 +18,7 @@ class Comments extends BasicModule
         foreach ($input->data as $rt_comment) {
             if ($stmt->execute([
                 ':route' => $rt_comment->route_ID,
-                ':user' => $rt_comment->user_ID,
+                ':user' => $this->user_ID,
                 ':val' => $rt_comment->value
             ])) {
                 $res[] = $this->db->lastInsertId();
