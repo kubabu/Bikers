@@ -8,15 +8,17 @@
             <tr>
                 <th>Lp</th>
                 <th>Od</th>
+                <th>Do</th>
                 <th>Treść</th>
                 <th>Akcje</th>
             </tr>
             <tr ng-repeat="msg in messages">
                 <td>{{$index + 1}}.</td>
-                <td>{{msg.from}}</td>
+                <td>{{msg.from_first}} {{msg.from_last}}</td>
+                <td>{{msg.to_first}} {{msg.to_last}}</td>
                 <td>{{msg.value}}</td>
                 <td>
-                    <button class="btn btn-primary">Odpowiedz</button>
+                    <a class="btn btn-primary" ng-href="#/messages/new/{{msg._receiver}}">Napisz</a>
                 </td>
             </tr>
         </table>

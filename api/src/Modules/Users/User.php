@@ -25,6 +25,11 @@ class User extends BasicModule
         $params = [];
         $wheres = [];
 
+        if (property_exists($data, '_not_me') && !empty($data->_not_me)) {
+            $wheres[] = 'ID != :user';
+            $params[':user'] = $this->user_ID;
+        }
+
         if (property_exists($data, 'id') && !empty($data->id)) {
             $wheres[] = 'ID = :id';
             $params[':id'] = $data->id;
