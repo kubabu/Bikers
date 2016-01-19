@@ -33,7 +33,7 @@ class Comments extends BasicModule
         $res = [];
         $user = new User($this->db);
 
-        $q = "SELECT `route_ID`, `user_ID`, `value`, `date_create` FROM routes_comments";
+        $q = "SELECT `rc`.`route_ID`, `rc`.`user_ID`, `rc`.`value`, `rc`.`date_create`, `u`.`first_name`, `u`.`last_name`  FROM routes_comments rc";
         $wheres = [];
         $params = [];
 
@@ -52,11 +52,15 @@ class Comments extends BasicModule
             $params[':user'] = $data->route_ID;
         }
 
+        if (property_exists($data, '_users') && !empty($data->_users)) {
+            $q .= ' INNER JOIN users u ON u.ID = rc.user_ID';
+        }
+
         if (count($wheres) > 0) {
             $q .= " WHERE " . implode(' AND ', $wheres);
         }
 
-        $q .= " ORDER BY date_create DESC";
+        $q .= " ORDER BY `rc`.date_create DESC";
 
         $stmt = $this->db->prepare($q);
 

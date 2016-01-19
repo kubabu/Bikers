@@ -69,6 +69,10 @@ class Routes extends BasicModule
                 $params[':bike_id'] = $data->bike_ID;
             }
 
+            if (!property_exists($data, '_comments_users') || empty($data->_comments_users)) {
+                $data->_comments_users = false;
+            }
+
             if (count($wheres) > 0) {
                 $q .= " WHERE " . implode(' AND ', $wheres);
             }
@@ -89,7 +93,7 @@ class Routes extends BasicModule
                         }
 
                         if (property_exists($data, '_comments') && $data->_comments) {
-                            $route->comments = $routesComments->get((object) ['route_ID' => $route->ID]);
+                            $route->comments = $routesComments->get((object) ['route_ID' => $route->ID, '_users'=> $data->_comments_users]);
                         }
 
                         $res[] = $route;
