@@ -6,7 +6,7 @@ angular.module('controllers.routes', []).controller('RoutesCtrl', ['$scope', 'Ro
     });
 }]);
 
-angular.module('controllers.routes').controller('RoutesNewCtrl', ['$scope', 'RoutesSvc', 'BikesSvc', function ($scope, RoutesSvc, BikesSvc) {
+angular.module('controllers.routes').controller('RoutesNewCtrl', ['$scope', '$location', 'RoutesSvc', 'BikesSvc', function ($scope, $location, RoutesSvc, BikesSvc) {
     $scope.route = {
         landmarks: [],
         comments: []
@@ -29,7 +29,12 @@ angular.module('controllers.routes').controller('RoutesNewCtrl', ['$scope', 'Rou
         $scope.route.date_of_ride = moment($scope._set_date).format("YYYY-MM-DD ") +  moment($scope._set_hour).format("HH:mm:ss");
         $scope.route.duration_of_ride = $scope.route.duration_of_ride.getMinutes();
 
-        RoutesSvc.addRoute($scope.route).then(function () {
+        RoutesSvc.addRoute($scope.route).then(function (res) {
+            if(res.length > 0){
+                $location.path('/routes/show/' + res[0]);
+            } else {
+                $location.path('/routes/');
+            }
 
         });
     };
