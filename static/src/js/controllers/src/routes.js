@@ -26,13 +26,8 @@ angular.module('controllers.routes').controller('RoutesNewCtrl', ['$scope', 'Rou
     });
 
     $scope.submit = function () {
-            $scope.route.date_of_ride = moment($scope._set_date).format("YYYY-MM-DD ") +  moment($scope._set_hour).format("HH:mm:ss");
-            $scope.route.duration_of_ride = $scope.route.duration_of_ride.getMinutes();
-
-            console.log("var dumpg");
-            console.log("duration", $scope.route.duration_of_ride);
-            console.log("date of ride", $scope.route.date_of_ride);
-
+        $scope.route.date_of_ride = moment($scope._set_date).format("YYYY-MM-DD ") +  moment($scope._set_hour).format("HH:mm:ss");
+        $scope.route.duration_of_ride = $scope.route.duration_of_ride.getMinutes();
 
         RoutesSvc.addRoute($scope.route).then(function () {
 
@@ -46,6 +41,13 @@ angular.module('controllers.routes').controller('RoutesShowCtrl', ['$scope', 'Ro
     if (angular.isDefined($scope.$parent.ID) && !isNaN($scope.$parent.ID)) {
         RoutesSvc.getUserRoutes({id: $scope.$parent.ID, _landmarks: true, _comments: true}).then(function (routes) {
             $scope.route = routes[0];
+
+            if(angular.isArray($scope.route.comments) && $scope.route.comments.length > 0) {
+                $scope.route.comments = $scope.route.comments.map(function(comment){
+                    comment.date_create =  moment(comment.date_create).valueOf();
+                    return comment;
+                })
+            }
         });
     }
 }]);
