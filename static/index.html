@@ -21,7 +21,9 @@
             <div class="navbar-collapse collapse" ng-if="logged">
                 <ul class="nav navbar-nav">
                     <li ng-class="{ 'active' : url.active }" ng-repeat="url in urls">
-                        <a ng-href="{{url.path}}">{{url.name}}</a>
+                        <a ng-href="{{url.path}}">{{url.name}}
+                            <span ng-if="url.name == 'Wiadomości' && unread_msg_count > 0" class="badge">{{ unread_msg_count }}</span>
+                        </a>
                     </li>
                 </ul>
                 <div class="navbar-text navbar-right">
