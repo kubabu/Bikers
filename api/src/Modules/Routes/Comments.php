@@ -31,9 +31,9 @@ class Comments extends BasicModule
     public function get($data)
     {
         $res = [];
-        $user = new User($this->db);
 
-        $q = "SELECT `rc`.`route_ID`, `rc`.`user_ID`, `rc`.`value`, `rc`.`date_create`, `u`.`first_name`, `u`.`last_name`  FROM routes_comments rc";
+        $q = " FROM routes_comments rc";
+        $fields = ['`rc`.`route_ID`', '`rc`.`user_ID`', '`rc`.`value`', '`rc`.`date_create`'];
         $wheres = [];
         $params = [];
 
@@ -54,6 +54,8 @@ class Comments extends BasicModule
 
         if (property_exists($data, '_users') && !empty($data->_users)) {
             $q .= ' INNER JOIN users u ON u.ID = rc.user_ID';
+            $fields[] = '`u`.`first_name`';
+            $fields[] = '`u`.`last_name`';
         }
 
         if (count($wheres) > 0) {
@@ -61,6 +63,8 @@ class Comments extends BasicModule
         }
 
         $q .= " ORDER BY `rc`.date_create DESC";
+
+        $q = "SELECT " . implode(', ', $fields) . $q;
 
         $stmt = $this->db->prepare($q);
 
