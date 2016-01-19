@@ -6,11 +6,15 @@ angular.module('controllers.bikes', []).controller('BikesCtrl', ['$scope', 'Bike
     });
 }]);
 
-angular.module('controllers.bikes').controller('BikesNewCtrl', ['$scope', 'BikesSvc', function ($scope, BikesSvc) {
+angular.module('controllers.bikes').controller('BikesNewCtrl', ['$scope', '$location', 'BikesSvc', function ($scope, $location, BikesSvc) {
     $scope.bike = {};
     $scope.submit = function () {
-        BikesSvc.addBike($scope.bike).then(function () {
-
+        BikesSvc.addBike($scope.bike).then(function (res) {
+            if(res.length > 0){
+                $location.path('/bikes/show/' + res[0]);
+            } else {
+                $location.path('/bikes/');
+            }
         });
     }
 }]);
@@ -25,7 +29,7 @@ angular.module('controllers.bikes').controller('BikesShowCtrl', ['$scope', 'Bike
     }
 }]);
 
-angular.module('controllers.bikes').controller('BikesPartsNewCtrl', ['$scope', 'BikesSvc', 'PartsSvc', function ($scope, BikesSvc, PartsSvc) {
+angular.module('controllers.bikes').controller('BikesPartsNewCtrl', ['$scope', '$location', 'BikesSvc', 'PartsSvc', function ($scope,  $location, BikesSvc, PartsSvc) {
     $scope.data = {
         bike_ID: $scope.$parent.ID
     };
@@ -40,8 +44,12 @@ angular.module('controllers.bikes').controller('BikesPartsNewCtrl', ['$scope', '
     });
 
     $scope.submit = function () {
-        BikesSvc.addBikePart($scope.data).then(function () {
-
+        BikesSvc.addBikePart($scope.data).then(function (res) {
+            if(res.length > 0){
+                $location.path('/bikes/show/' +  + $scope.data.bike_ID);
+            } else {
+                $location.path('/bikes/');
+            }
         });
     }
 }]);
