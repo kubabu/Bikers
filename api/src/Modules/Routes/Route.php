@@ -33,6 +33,20 @@ class Route extends BasicModule
             $q .= " WHERE " . implode(' AND ', $wheres);
         }
 
+        if (property_exists($data, '_order')) {
+            $q .= ' ORDER BY ID ';
+
+            if ($data->_order === true) {
+                $q .= 'ASC';
+            } else {
+                $q .= 'DESC';
+            }
+        }
+
+        if (property_exists($data, '_limit') && !empty($data->_limit) && is_numeric($data->_limit)) {
+            $q .= ' LIMIT 0, ' . $data->_limit;
+        }
+
         $stmt = $this->db->prepare($q);
 
         if ($stmt->execute($params)) {

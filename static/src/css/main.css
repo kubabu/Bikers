@@ -7,5 +7,9 @@ body {
 }
 
 textarea {
-    resize:vertical;
+    resize: vertical;
+}
+
+.user-foto {
+    border: 1px solid #cccccc;
 }
