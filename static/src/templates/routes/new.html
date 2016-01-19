@@ -17,12 +17,21 @@
             <select id="route_bike" class="form-control" ng-options="bike.ID as bike.name for bike in bikes" ng-model="route.bike_ID"></select>
         </div>
         <div class="form-group">
-            <label for="route_date_of_ride">Data przejazdu</label>
-            <input type="text" id="route_date_of_ride" class="form-control" ng-model="route.date_of_ride">
+            <label>Data i godzina wyjazdu</label>
+            <div class="row ">
+                <div class="col-md-4">
+                    <div style="display:inline-block; min-height:290px;">
+                      <uib-datepicker ng-model="_set_date" show-weeks="true" class="well well-sm"></uib-datepicker>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <uib-timepicker ng-model="_set_hour" ng-change="changed()" hour-step="1" minute-step="1" show-meridian="false"></uib-timepicker>
+                </div>
+            </div>
         </div>
         <div class="form-group">
-            <label for="route_duration_of_ride">Czas przejazdu (min)</label>
-            <input type="number" id="route_duration_of_ride" class="form-control" ng-model="route.duration_of_ride">
+            <label>Czas przejazdu [godz: min]</label>
+            <uib-timepicker ng-model="route.duration_of_ride" hour-step="1" minute-step="1" second-step="1" show-meridian="false"></uib-timepicker>
         </div>
         <div class="form-group">
             <h4>Punkty orientacyjne</h4>

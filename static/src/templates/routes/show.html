@@ -17,6 +17,41 @@
                 <p><strong>Data</strong> {{route.date_of_ride}}</p>
                 <p><strong>Czas trwania</strong> {{route.duration_of_ride}} min</p>
             </div>
+            <div ng-if="route.comments" class="panel-body">
+                <p><strong>Komentarze:</strong></p>
+                <div>
+                    <div ng-repeat="comment in route.comments">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        username tralala
+                                    </div>
+                                    <div class="col-md-6 text-right">
+                                        {{ comment.date_create | date : 'd MMM H:m' }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <p>{{comment.value}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                        Dodaj nowy komentarz
+                        </div>
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <textarea type="text" class="form-control" ng-model="new_comment.value"></textarea>
+                            </div>
+                            <div>
+                                <button class="btn btn-primary" ng-click="addComment()">Zapisz</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
