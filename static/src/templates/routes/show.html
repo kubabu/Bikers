@@ -4,7 +4,7 @@
             <div class="panel-heading">Trasa</div>
             <div class="panel-body">
                 <p><strong>Początek:</strong> {{route.from_dst}}</p>
-                <div ng-if="route.landmarks">
+                <div ng-if="route.landmarks.length > 0">
                     <p><strong>Punkty na trasie:</strong></p>
                     <ol>
                         <li ng-repeat="landmark in route.landmarks">{{landmark.value}}</li>
@@ -25,7 +25,7 @@
                             <div class="panel-heading">
                                 <div class="row">
                                     <div class="col-md-6">
-                                        username tralala
+                                        {{ comment.first_name }} {{ comment.last_name }}
                                     </div>
                                     <div class="col-md-6 text-right">
                                         {{ comment.date_create | date : 'yyyy-MM-d H:m' }}

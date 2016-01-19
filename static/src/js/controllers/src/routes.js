@@ -40,9 +40,14 @@ angular.module('controllers.routes').controller('RoutesNewCtrl', ['$scope', '$lo
     };
 }]);
 
-angular.module('controllers.routes').controller('RoutesShowCtrl', ['$scope', 'RoutesSvc', function ($scope, RoutesSvc) {
+angular.module('controllers.routes').controller('RoutesShowCtrl', ['$scope', 'RoutesSvc', 'UsersSvc', function ($scope, RoutesSvc, UsersSvc) {
     $scope.route = {};
     $scope.new_comment = {};
+    UsersSvc.getUsers({"_me": true}).then(function(resp){
+        if(angular.isArray(resp) && resp.length > 0) {
+            $scope.cur_user = resp[0];
+         }
+    });
 
     function initNewComment (){
         $scope.new_comment = {
@@ -51,7 +56,7 @@ angular.module('controllers.routes').controller('RoutesShowCtrl', ['$scope', 'Ro
     }
 
     if (angular.isDefined($scope.$parent.ID) && !isNaN($scope.$parent.ID)) {
-        RoutesSvc.getUserRoutes({id: $scope.$parent.ID, _landmarks: true, _comments: true}).then(function (routes) {
+        RoutesSvc.getUserRoutes({id: $scope.$parent.ID, _landmarks: true, _comments: true, _comments_users: true}).then(function (routes) {
             $scope.route = routes[0];
             initNewComment();
 
@@ -67,6 +72,9 @@ angular.module('controllers.routes').controller('RoutesShowCtrl', ['$scope', 'Ro
     $scope.addComment = function(){
         RoutesSvc.addRouteComment($scope.new_comment).then(function (){
             $scope.new_comment.date_create = new Date();
+            $scope.new_comment.first_name = $scope.cur_user.first_name;
+            $scope.new_comment.last_name = $scope.cur_user.last_name + " (Ty)";
+
             $scope.route.comments.unshift(angular.copy($scope.new_comment));
             initNewComment();
         })
