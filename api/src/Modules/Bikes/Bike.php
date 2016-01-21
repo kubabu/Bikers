@@ -26,6 +26,8 @@ class Bike extends BasicModule
         $wheres = ['user_ID = :user'];
         $params = [':user' => $this->user_ID];
         $bikeParts = new Parts($this->db);
+        $bikeComments = new Comments($this->db);
+
 
         if (property_exists($data, 'id') && !empty($data->id)) {
             $wheres[] = 'ID = :id';
@@ -40,10 +42,14 @@ class Bike extends BasicModule
             $stmt = $this->db->prepare($q);
 
             if ($stmt->execute($params)) {
-                if ($data = $stmt->fetchAll(\PDO::FETCH_OBJ)) {
-                    foreach ($data as $bike) {
+                if ($bikes = $stmt->fetchAll(\PDO::FETCH_OBJ)) {
+                    foreach ($bikes as $bike) {
                         if (!empty($parts = $bikeParts->get((object) ['bike_ID' => $bike->ID]))) {
                             $bike->parts = $parts;
+                        }
+
+                        if (property_exists($data, '_comments') && $data->_comments) {
+                            $bike->_comments = $bikeComments->get((object)['bike_ID' => $bike->ID]);
                         }
 
                         $res[] = $bike;

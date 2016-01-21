@@ -50,7 +50,6 @@ angular.module('controllers.bikes').controller('BikesEditCtrl', ['$scope', '$loc
 }]);
 
 angular.module('controllers.bikes').controller('BikesShowCtrl', ['$scope', 'BikesSvc', 'UsersSvc', function ($scope, BikesSvc, UsersSvc) {
-    $scope.bike = {};
     $scope.new_comment = {};
     UsersSvc.getUsers({"_me": true}).then(function(resp){
         if(angular.isArray(resp) && resp.length > 0) {
@@ -65,7 +64,7 @@ angular.module('controllers.bikes').controller('BikesShowCtrl', ['$scope', 'Bike
     }
 
     if (angular.isDefined($scope.$parent.ID) && !isNaN($scope.$parent.ID)) {
-        BikesSvc.getBikes({id: $scope.$parent.ID}).then(function (bikes) {
+        BikesSvc.getBikes({id: $scope.$parent.ID, _comments: true}).then(function (bikes) {
             $scope.bike = bikes[0];
             initNewComment();
 
@@ -84,7 +83,7 @@ angular.module('controllers.bikes').controller('BikesShowCtrl', ['$scope', 'Bike
             $scope.new_comment.first_name = $scope.cur_user.first_name;
             $scope.new_comment.last_name = $scope.cur_user.last_name + " (Ty)";
 
-            $scope.route.comments.unshift(angular.copy($scope.new_comment));
+            $scope.bike._comments.unshift(angular.copy($scope.new_comment));
             initNewComment();
         })
     }
