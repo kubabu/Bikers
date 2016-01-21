@@ -76,4 +76,20 @@ class Comments extends BasicModule
 
         return $res;
     }
+
+    public function del($data)
+    {
+        $res = [];
+        $stmt = $this->db->prepare("DELETE FROM routes_comments WHERE ID = :id");
+
+        foreach ($data->data as $comment) {
+            if (property_exists($comment, 'ID') && is_numeric($comment->ID)) {
+                if ($stmt->execute([':id' => $comment->ID])) {
+                    $res[] = $comment->ID;
+                }
+            }
+        }
+
+        return $res;
+    }
 }

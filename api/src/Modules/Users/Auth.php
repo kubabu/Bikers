@@ -100,6 +100,12 @@ class Auth extends BasicModule
         return [false];
     }
 
+    public function del($data)
+    {
+        return [false];
+    }
+
+
     private function getRequestIp()
     {
         return '127.0.0.1';
