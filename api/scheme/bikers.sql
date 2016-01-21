@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS `messages` (
   `to_user` int(11) unsigned NOT NULL,
   `value` text COLLATE utf8_polish_ci NOT NULL,
   `date_create` datetime NOT NULL,
-  `date_update` datetime,
+  `date_read` datetime,
   PRIMARY KEY (`ID`),
   KEY `from_user` (`from_user`,`to_user`),
   KEY `to_user` (`to_user`)
@@ -96,8 +96,8 @@ CREATE TABLE IF NOT EXISTS `routes_landmarks` (
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE IF NOT EXISTS `users` (
   `ID` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `first_name` tinytext CHARACTER SET latin1,
-  `last_name` tinytext CHARACTER SET latin1,
+  `first_name` tinytext COLLATE  utf8_polish_ci,
+  `last_name` tinytext COLLATE utf8_polish_ci,
   `date_create` datetime NOT NULL,
   `date_update` datetime NOT NULL,
   PRIMARY KEY (`ID`)
@@ -156,11 +156,16 @@ ALTER TABLE `users_routes`
   ADD CONSTRAINT `users_routes_ibfk_1` FOREIGN KEY (`route_ID`) REFERENCES `routes` (`ID`) ON DELETE CASCADE ON UPDATE NO ACTION,
   ADD CONSTRAINT `users_routes_ibfk_2` FOREIGN KEY (`bike_ID`) REFERENCES `bikes` (`ID`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
+
 DROP FUNCTION IF EXISTS unread_message_count;
-CREATE FUNCTION unread_message_count(user_ID INT) RETURNS INT
-  BEGIN
-    SELECT COUNT * FROM
-  END;
+DELIMITER //
+CREATE FUNCTION unread_message_count (user_ID INT)
+  RETURNS INT DETERMINISTIC READS SQL DATA
+BEGIN
+  RETURN (SELECT COUNT(*) FROM messages msg WHERE msg.date_read IS NULL AND msg.to_user = user_ID);
+END //
+DELIMITER ;
+
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

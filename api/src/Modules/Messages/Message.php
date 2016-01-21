@@ -23,7 +23,7 @@ class Message extends BasicModule
         $res = [];
 
         if (!empty($this->user_ID)) {
-            $q = "INSERT INTO messages (from_user, to_user, value, date_create, date_update) VALUES (:from, :to, :value, NOW(), NOW())";
+            $q = "INSERT INTO messages (from_user, to_user, value, date_create) VALUES (:from, :to, :value, NOW())";
 
             $stmt = $this->db->prepare($q);
 
@@ -45,7 +45,7 @@ class Message extends BasicModule
     {
         $res = [];
 
-        $q = "SELECT m.ID, m.from_user, uf.first_name from_first, uf.last_name from_last, m.to_user, ut.first_name to_first, ut.last_name to_last, m.value, m.date_create, m.date_update FROM messages m INNER JOIN users uf ON uf.ID = m.from_user INNER JOIN users ut ON ut.ID = m.to_user";
+        $q = "SELECT m.ID, m.from_user, uf.first_name from_first, uf.last_name from_last, m.to_user, ut.first_name to_first, ut.last_name to_last, m.value, m.date_create, m.date_read FROM messages m INNER JOIN users uf ON uf.ID = m.from_user INNER JOIN users ut ON ut.ID = m.to_user";
         $wheres = ['(m.from_user = :user OR m.to_user = :user)'];
         $params = [':user' => $this->user_ID];
 
