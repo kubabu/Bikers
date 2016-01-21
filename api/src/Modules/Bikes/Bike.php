@@ -34,6 +34,10 @@ class Bike extends BasicModule
             $params[':id'] = $data->id;
         }
 
+        if (!property_exists($data, '_comments_users') || empty($data->_comments_users)) {
+            $data->_comments_users = false;
+        }
+
         if (count($wheres) > 0) {
             $q .= " WHERE " . implode(' AND ', $wheres);
         }
@@ -49,7 +53,7 @@ class Bike extends BasicModule
                         }
 
                         if (property_exists($data, '_comments') && $data->_comments) {
-                            $bike->_comments = $bikeComments->get((object)['bike_ID' => $bike->ID]);
+                            $bike->_comments = $bikeComments->get((object)['bike_ID' => $bike->ID, '_users'=> $data->_comments_users]);
                         }
 
                         $res[] = $bike;

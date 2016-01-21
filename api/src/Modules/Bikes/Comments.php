@@ -53,9 +53,9 @@ class Comments extends BasicModule
         }
 
         if (property_exists($data, '_users') && !empty($data->_users)) {
-            $q .= ' INNER JOIN users u ON u.ID = rc.user_ID';
-            $fields[] = '`u`.`first_name`';
-            $fields[] = '`u`.`last_name`';
+            $q .= ' INNER JOIN users u ON u.ID = bc.user_ID';
+            $fields[] = '`u`.`first_name` _first_name';
+            $fields[] = '`u`.`last_name` _last_name';
         }
 
         if (count($wheres) > 0) {
