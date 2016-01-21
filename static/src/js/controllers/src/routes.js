@@ -60,7 +60,7 @@ angular.module('controllers.routes').controller('RoutesShowCtrl', ['$scope', 'Ro
 
     function initNewComment (){
         $scope.new_comment = {
-            route_ID: $scope.route.ID
+            route_ID: angular.copy($scope.route.ID)
         };
     }
 

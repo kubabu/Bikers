@@ -52,7 +52,7 @@ class User extends BasicModule
 
         if ($stmt = $this->db->prepare($q)) {
             $stmt->execute($params);
-            return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+            return $stmt->fetchAll(\PDO::FETCH_OBJ);
         } else {
             return []; //pdo cannot successfuly prepare stmt
         }
