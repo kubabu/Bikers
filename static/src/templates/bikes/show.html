@@ -33,19 +33,22 @@
                         </div>
                     </div>
                 </div>
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        Dodaj nowy komentarz
-                    </div>
-                    <div class="panel-body">
-                        <div class="form-group">
-                            <textarea type="text" class="form-control" ng-model="new_comment.value"></textarea>
+                <form name="NewBikeComment">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Dodaj nowy komentarz
                         </div>
-                        <div>
-                            <button class="btn btn-primary" ng-click="addComment()">Zapisz</button>
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <textarea type="text" class="form-control" ng-model="new_comment.value" validation="required"></textarea>
+                            </div>
+                            <div>
+                                <button class="btn btn-primary" validation-submit="NewBikeComment" ng-click="addComment()">Zapisz</button>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </form>
+
             </div>
         </div>
 

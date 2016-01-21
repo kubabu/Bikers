@@ -11,13 +11,13 @@ class Comments extends BasicModule
     public function post($input) {
         $res = [];
 
-        $q = "INSERT INTO `bikes_comments` (`bike_ID`, `user_ID`, `value`, `date_create`) VALUES (:bike, :user, :val, NOW() )";
+        $q = "INSERT INTO `bikes_comments` (`bike_ID`, `user_ID`, `value`, `date_create`) VALUES (:bike, :user, :val, NOW())";
 
         $stmt = $this->db->prepare($q);
 
         foreach ($input->data as $bk_comment) {
             if ($stmt->execute([
-                ':route' => $bk_comment->bike_ID,
+                ':bike' => $bk_comment->bike_ID,
                 ':user' => $this->user_ID,
                 ':val' => $bk_comment->value
             ])) {
