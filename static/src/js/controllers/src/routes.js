@@ -60,8 +60,8 @@ angular.module('controllers.routes').controller('RoutesShowCtrl', ['$scope', 'Ro
 
 angular.module('controllers.routes').controller('RoutesNewCtrl', ['$scope', '$location', 'RoutesSvc', 'BikesSvc', function ($scope, $location, RoutesSvc, BikesSvc) {
     $scope.route = {
-        landmarks: [],
-        comments: []
+        _landmarks: [],
+        _comments: []
     };
     $scope.route.duration_of_ride = new Date(0);
     $scope.bikes = [];

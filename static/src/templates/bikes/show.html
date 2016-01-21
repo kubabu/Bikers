@@ -4,7 +4,7 @@
         <p>{{ bike.description }}</p>
         <div>
             <h4>Zamontowane częsci </h4>
-            <p ng-repeat="part in bike.parts">
+            <p ng-repeat="part in bike._parts">
                 {{part.name}}
             </p>
             <div>
@@ -12,5 +12,42 @@
                 <a href="" ng-href="#/parts/new/{{bike.ID}}" class="btn btn-primary">Dodaj część</a>
             </div>
         </div>
+
+        <div class="panel-body">
+            <p><strong>Komentarze:</strong></p>
+            <div>
+                <div ng-repeat="comment in bike._comments">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    {{ comment.first_name }} {{ comment.last_name }}
+                                </div>
+                                <div class="col-md-6 text-right">
+                                    {{ comment.date_create | date : 'yyyy-MM-d H:m' }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <p>{{comment.value}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Dodaj nowy komentarz
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <textarea type="text" class="form-control" ng-model="new_comment.value"></textarea>
+                        </div>
+                        <div>
+                            <button class="btn btn-primary" ng-click="addComment()">Zapisz</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>

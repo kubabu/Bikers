@@ -73,7 +73,21 @@ angular.module('services.bikes', []).service('BikesSvc', ['$http', '$q', 'url', 
         });
 
         return defer.promise;
-    }
+    };
+
+    self.addBikeComment = function (data) {
+        var defer = $q.defer();
+
+        $http.post(url + 'bikes/comments/', {data: [data]}).then(function (res) {
+            if (res.data.status) {
+                defer.resolve(res.data.results);
+            } else {
+                defer.resolve([]);
+            }
+        });
+
+        return defer.promise;
+    };
 
     return self;
 }]);

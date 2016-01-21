@@ -49,13 +49,43 @@ angular.module('controllers.bikes').controller('BikesEditCtrl', ['$scope', '$loc
     }
 }]);
 
-angular.module('controllers.bikes').controller('BikesShowCtrl', ['$scope', 'BikesSvc', function ($scope, BikesSvc) {
-    $scope.bike = {};
+angular.module('controllers.bikes').controller('BikesShowCtrl', ['$scope', 'BikesSvc', 'UsersSvc', function ($scope, BikesSvc, UsersSvc) {
+    $scope.new_comment = {};
+    UsersSvc.getUsers({"_me": true}).then(function(resp){
+        if(angular.isArray(resp) && resp.length > 0) {
+            $scope.cur_user = resp[0];
+        }
+    });
+
+        function initNewComment (){
+        $scope.new_comment = {
+            bike_ID: $scope.bike.ID
+        };
+    }
 
     if (angular.isDefined($scope.$parent.ID) && !isNaN($scope.$parent.ID)) {
-        BikesSvc.getBikes({id: $scope.$parent.ID}).then(function (bikes) {
+        BikesSvc.getBikes({id: $scope.$parent.ID, _comments: true}).then(function (bikes) {
             $scope.bike = bikes[0];
+            initNewComment();
+
+            if(angular.isArray($scope.bike.comments) && $scope.bike.comments.length > 0) {
+                $scope.bike.comments = $scope.bike.comments.map(function(comment){
+                    comment.date_create =  moment(comment.date_create).valueOf();
+                    return comment;
+                })
+            }
         });
+    }
+
+    $scope.addComment = function(){
+        BikesSvc.addBikeComment($scope.new_comment).then(function (){
+            $scope.new_comment.date_create = new Date();
+            $scope.new_comment.first_name = $scope.cur_user.first_name;
+            $scope.new_comment.last_name = $scope.cur_user.last_name + " (Ty)";
+
+            $scope.bike._comments.unshift(angular.copy($scope.new_comment));
+            initNewComment();
+        })
     }
 }]);
 
