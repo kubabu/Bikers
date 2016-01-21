@@ -16,6 +16,44 @@ angular.module('controllers.routes', []).controller('RoutesCtrl', ['$scope', 'Ro
     $scope.getRoutes();
 }]);
 
+angular.module('controllers.routes').controller('RoutesEditCtrl', ['$scope', '$location', 'RoutesSvc', 'BikesSvc', 'UsersSvc', function ($scope, $location, RoutesSvc, BikesSvc, UsersSvc) {
+    $scope.route = {}
+    $scope.bikes = [];
+
+    if (angular.isDefined($scope.$parent.ID) && !isNaN($scope.$parent.ID)) {
+        RoutesSvc.getUserRoutes({id: $scope.$parent.ID, _landmarks: true}).then(function (routes) {
+            $scope.route = routes[0];
+            $scope.route.duration_of_ride = moment({
+                minutes: $scope.route.duration_of_ride
+            }).toDate();
+
+            $scope._set_date = moment($scope.route.date_of_ride).toDate();
+            $scope._set_hour = moment($scope.route.date_of_ride).toDate();
+
+            BikesSvc.getBikes().then(function (bikes) {
+                $scope.bikes = bikes;
+
+                if (bikes.length > 0 && !$scope.route.bike_ID) {
+                    $scope.route.bike_ID = bikes[0].ID;
+                }
+            });
+        });
+    }
+
+    $scope.submit = function () {
+        $scope.route.date_of_ride = moment($scope._set_date).format("YYYY-MM-DD ") +  moment($scope._set_hour).format("HH:mm:ss");
+        $scope.route.duration_of_ride = $scope.route.duration_of_ride.getMinutes();
+
+        RoutesSvc.editUserRoute($scope.route).then(function (res) {
+            if(res.length > 0){
+                $location.path('/routes/show/' + res[0]);
+            } else {
+                $location.path('/routes/');
+            }
+        });
+    };
+}]);
+
 angular.module('controllers.routes').controller('RoutesShowCtrl', ['$scope', 'RoutesSvc', 'UsersSvc', function ($scope, RoutesSvc, UsersSvc) {
     $scope.route = {};
     $scope.new_comment = {};

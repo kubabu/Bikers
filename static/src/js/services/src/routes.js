@@ -79,6 +79,20 @@ angular.module('services.routes', []).service('RoutesSvc', ['$http', '$q', 'url'
         return defer.promise;
     };
 
+    self.editUserRoute = function (route) {
+        var defer = $q.defer();
+
+        $http.put(url + 'users/routes/', {data: [route]}).then(function (res) {
+            if (res.data.status) {
+                defer.resolve(res.data.results);
+            } else {
+                defer.resolve([]);
+            }
+        });
+
+        return defer.promise;
+    };
+
     self.deleteRoute = function (id) {
         var defer = $q.defer();
 

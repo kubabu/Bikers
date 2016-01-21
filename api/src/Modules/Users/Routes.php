@@ -55,7 +55,7 @@ class Routes extends BasicModule
         $routesComments = new Comments($this->db);
 
         if (!empty($this->user_ID)) {
-            $q = "SELECT r.ID, r.name, r.from_dst, r.to_dst, ur.date_of_ride, ur.duration_of_ride, ur.bike_ID FROM routes r INNER JOIN users_routes ur ON r.ID = ur.route_ID ";
+            $q = "SELECT ur.ID, r.name, r.from_dst, r.to_dst, ur.date_of_ride, ur.duration_of_ride, ur.bike_ID, ur.route_ID FROM routes r INNER JOIN users_routes ur ON r.ID = ur.route_ID ";
             $wheres = ['user_ID = :user_id'];
             $params = [':user_id' => $this->user_ID];
 
@@ -98,16 +98,16 @@ class Routes extends BasicModule
                     foreach ($routes as $route) {
                         $bikes = $bikesBike->get((object) ['id' => $route->bike_ID]);
                         if (count($bikes) > 0) {
-                            $route->bike = $bikes[0];
+                            $route->_bike = $bikes[0];
                         }
                         unset($data->bike_ID);
 
                         if (property_exists($data, '_landmarks') && $data->_landmarks) {
-                            $route->landmarks = $routesLandmarks->get((object) ['route_ID' => $route->ID]);
+                            $route->_landmarks = $routesLandmarks->get((object) ['route_ID' => $route->ID]);
                         }
 
                         if (property_exists($data, '_comments') && $data->_comments) {
-                            $route->comments = $routesComments->get((object) ['route_ID' => $route->ID, '_users'=> $data->_comments_users]);
+                            $route->_comments = $routesComments->get((object) ['route_ID' => $route->ID, '_users'=> $data->_comments_users]);
                         }
 
                         $res[] = $route;
@@ -138,6 +138,7 @@ class Routes extends BasicModule
     public function put($input)
     {
         $res = [];
+        $routes = new Route($this->db);
 
         if (!empty($this->user_ID)) {
             foreach ($input->data as $route) {
@@ -146,7 +147,7 @@ class Routes extends BasicModule
                     $fields = [];
 
                     foreach($route as $field => $value) {
-                        if ($this->updateableField($field) && !in_array($field, ['from_dst', 'to_dst', 'name'])) {
+                        if ($this->updateableField($field) && !in_array($field, ['from_dst', 'to_dst', 'name', 'route_ID'])) {
                             $fields[] = "$field = :$field";
                             $values[":$field"] = $value;
                         }
@@ -160,6 +161,13 @@ class Routes extends BasicModule
                         if ($stmt->execute($values)) {
                             $res[] = $route->ID;
                         }
+                    }
+
+                    if (property_exists($route, 'route_ID') && !empty($route->route_ID)) {
+                        $route->ID = $route->route_ID;
+                        unset($route->route_ID);
+
+                        $routes->put((object) ['data' => [$route]]);
                     }
                 } else {
                     $post = $this->post((object) ['data' => [$route]]);
