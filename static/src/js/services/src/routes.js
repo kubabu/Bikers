@@ -82,7 +82,7 @@ angular.module('services.routes', []).service('RoutesSvc', ['$http', '$q', 'url'
     self.editUserRoute = function (route) {
         var defer = $q.defer();
 
-        $http.put(url + '/users/routes/', {data: [route]}).then(function (res) {
+        $http.put(url + 'users/routes/', {data: [route]}).then(function (res) {
             if (res.data.status) {
                 defer.resolve(res.data.results);
             } else {
