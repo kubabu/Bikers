@@ -40,7 +40,7 @@
                     <th>Lp.</th>
                     <th>Nazwa</th>
                 </tr>
-                <tr ng-repeat="landmark in route.landmarks">
+                <tr ng-repeat="landmark in route._landmarks">
                     <td>{{$index + 1}}</td>
                     <td ng-init="landmark.landmark_order = $index">
                         <input type="text" class="form-control" ng-model="landmark.value">
@@ -48,7 +48,7 @@
                 </tr>
                 <tr>
                     <td colspan="2">
-                        <button class="btn btn-default btn-block btn-lg" ng-click="route.landmarks.push({})">Dodaj punkt</button>
+                        <button class="btn btn-default btn-block btn-lg" ng-click="route._landmarks.push({})">Dodaj punkt</button>
                     </td>
                 </tr>
             </table>
