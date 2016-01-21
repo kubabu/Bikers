@@ -43,7 +43,7 @@ class Bike extends BasicModule
                 if ($data = $stmt->fetchAll(\PDO::FETCH_OBJ)) {
                     foreach ($data as $bike) {
                         if (!empty($parts = $bikeParts->get((object) ['bike_ID' => $bike->ID]))) {
-                            $bike->parts = $parts;
+                            $bike->_parts = $parts;
                         }
 
                         $res[] = $bike;
@@ -119,6 +119,12 @@ class Bike extends BasicModule
                         if ($stmt->execute($values)) {
                             $res[] = $bike->ID;
                         }
+                    }
+                } else {
+                    $post = $this->post((object) ['data' => [$bike]]);
+
+                    if (!empty($post)) {
+                        $res[] = $post[0];
                     }
                 }
             }
