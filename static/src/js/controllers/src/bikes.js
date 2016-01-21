@@ -65,7 +65,7 @@ angular.module('controllers.bikes').controller('BikesShowCtrl', ['$scope', 'Bike
 
     $scope.getBikes = function () {
         if (angular.isDefined($scope.$parent.ID) && !isNaN($scope.$parent.ID)) {
-            BikesSvc.getBikes({id: $scope.$parent.ID, _comments: true}).then(function (bikes) {
+            BikesSvc.getBikes({id: $scope.$parent.ID, _comments: true, _comments_users: true}).then(function (bikes) {
                 $scope.bike = bikes[0];
                 initNewComment();
 

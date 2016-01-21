@@ -36,6 +36,7 @@ class Comments extends BasicModule
         $fields = ['`rc`.`route_ID`', '`rc`.`user_ID`', '`rc`.`value`', '`rc`.`date_create`'];
         $wheres = [];
         $params = [];
+        $commenter = new User($this->db);
 
         if (property_exists($data, 'id') && !empty($data->id)) {
             $wheres[] = 'ID = :id';
@@ -54,8 +55,8 @@ class Comments extends BasicModule
 
         if (property_exists($data, '_users') && !empty($data->_users)) {
             $q .= ' INNER JOIN users u ON u.ID = rc.user_ID';
-            $fields[] = '`u`.`first_name`';
-            $fields[] = '`u`.`last_name`';
+            $fields[] = '`u`.`first_name` _first_name';
+            $fields[] = '`u`.`last_name` _last_name';
         }
 
         if (count($wheres) > 0) {
