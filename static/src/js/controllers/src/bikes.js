@@ -10,7 +10,7 @@ angular.module('controllers.bikes', []).controller('BikesCtrl', ['$scope', 'Bike
     $scope.delete = function (id) {
         BikesSvc.deleteBike(id).then(function () {
             $scope.getBikes();
-        })
+        });
     };
 
     $scope.getBikes();
