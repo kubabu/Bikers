@@ -1,37 +1,39 @@
-<div class="row">
-    <div class="col-xs-12" ng-controller="MessagesNewCtrl">
-        <div class="panel panel-info" ng-if="previous_messages">
-            <div class="panel-heading">Poprzednie wiadmości</div>
-            <div class="panel-body">
-                <table class="table table-responsive">
-                    <tr>
-                        <th>Od</th>
-                        <th>Treść</th>
-                        <th>Do</th>
-                    </tr>
-                    <tr ng-repeat="msg in previous_messages">
-                        <td>{{msg.form_first}} {{msg.from_last}}</td>
-                        <td>{{msg.value}}</td>
-                        <td>{{msg.to_first}} {{msg.to_last}}</td>
-                    </tr>
-                </table>
+<form name="MessageNew">
+    <div class="row">
+        <div class="col-xs-12" ng-controller="MessagesNewCtrl">
+            <div class="panel panel-info" ng-if="previous_messages">
+                <div class="panel-heading">Poprzednie wiadmości</div>
+                <div class="panel-body">
+                    <table class="table table-responsive">
+                        <tr>
+                            <th>Od</th>
+                            <th>Treść</th>
+                            <th>Do</th>
+                        </tr>
+                        <tr ng-repeat="msg in previous_messages">
+                            <td>{{msg.form_first}} {{msg.from_last}}</td>
+                            <td>{{msg.value}}</td>
+                            <td>{{msg.to_first}} {{msg.to_last}}</td>
+                        </tr>
+                    </table>
+                </div>
             </div>
-        </div>
-        <div class="panel panel-primary">
-            <div class="panel-heading">Dodaj wiadomość</div>
-            <div class="panel-body">
-                <div class="form-group">
-                    <label for="msg_to">Do</label>
-                    <select id="msg_to" class="form-control" ng-options="user.ID as user.first_name for user in users" ng-model="message.to_user" ng-disabled="disabled"></select>
-                </div>
-                <div class="form-group">
-                    <label for="msg_value">Treść</label>
-                    <input class="form-control" type="text" id="msg_value" ng-model="message.value">
-                </div>
-                <div>
-                    <button class="btn btn-primary" ng-click="submit()">Wyślij</button>
+            <div class="panel panel-primary">
+                <div class="panel-heading">Dodaj wiadomość</div>
+                <div class="panel-body">
+                    <div class="form-group">
+                        <label for="msg_to">Do</label>
+                        <select id="msg_to" class="form-control" ng-options="user.ID as user.first_name for user in users" ng-model="message.to_user" ng-disabled="disabled"></select>
+                    </div>
+                    <div class="form-group">
+                        <label for="msg_value">Treść</label>
+                        <input class="form-control" type="text" id="msg_value" ng-model="message.value" validator="required">
+                    </div>
+                    <div>
+                        <button class="btn btn-primary" validation-submit="MessageNew" ng-click="submit()">Wyślij</button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</form>

@@ -59,7 +59,7 @@ angular.module('controllers.bikes').controller('BikesShowCtrl', ['$scope', 'Bike
 
         function initNewComment (){
         $scope.new_comment = {
-            bike_ID: $scope.bike.ID
+            bike_ID: $scope.bike.ID,
         };
     }
 
@@ -78,6 +78,7 @@ angular.module('controllers.bikes').controller('BikesShowCtrl', ['$scope', 'Bike
     }
 
     $scope.addComment = function(){
+
         BikesSvc.addBikeComment($scope.new_comment).then(function (){
             $scope.new_comment.date_create = new Date();
             $scope.new_comment.first_name = $scope.cur_user.first_name;
