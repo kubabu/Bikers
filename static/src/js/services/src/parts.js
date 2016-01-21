@@ -61,5 +61,23 @@ angular.module('services.parts', []).service('PartsSvc', ['$http', '$q', 'url', 
         return defer.promise;
     };
 
+    self.deleteBikePart = function (bikePart) {
+        var defer = $q.defer();
+
+        $http.delete(url + 'bikes/parts/', {
+            params: {
+                data: [bikePart]
+            }
+        }).then(function (res) {
+            if (res.data.status) {
+                defer.resolve(res.data.results);
+            } else {
+                defer.resolve([]);
+            }
+        });
+
+        return defer.promise;
+    };
+
     return self;
 }]);
