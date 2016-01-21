@@ -1,10 +1,5 @@
 angular.module('controllers.nav', []).controller('NavCtrl', ['$scope', 'AuthSvc', '$interval', '$rootScope', function ($scope, AuthSvc, $interval, $rootScope) {
     $scope.unread_msg_count = 0;
-    $scope.user = {
-        first_name: "Twoja",
-        last_nama: "Stara"
-    };
-
     $scope.urls = [
         {path: '#/users/', name: 'Tablica', active: false},
         {path: '#/bikes/', name: 'Rowery', active: false},
