@@ -138,6 +138,7 @@ class Routes extends BasicModule
     public function put($input)
     {
         $res = [];
+        $routes = new Route($this->db);
 
         if (!empty($this->user_ID)) {
             foreach ($input->data as $route) {
@@ -146,7 +147,7 @@ class Routes extends BasicModule
                     $fields = [];
 
                     foreach($route as $field => $value) {
-                        if ($this->updateableField($field) && !in_array($field, ['from_dst', 'to_dst', 'name'])) {
+                        if ($this->updateableField($field) && !in_array($field, ['from_dst', 'to_dst', 'name', 'route_ID'])) {
                             $fields[] = "$field = :$field";
                             $values[":$field"] = $value;
                         }
@@ -160,6 +161,11 @@ class Routes extends BasicModule
                         if ($stmt->execute($values)) {
                             $res[] = $route->ID;
                         }
+                    }
+
+                    if (property_exists('route_ID', $route) && !empty($route->route_ID)) {
+                        $route->ID = $route->route_ID;
+                        $routes->put((object) ['data' => [$route]]);
                     }
                 } else {
                     $post = $this->post((object) ['data' => [$route]]);
