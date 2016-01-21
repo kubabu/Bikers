@@ -20,8 +20,8 @@
                 <td>{{route.to_dst}}</td>
                 <td>
                     <a class="btn btn-primary" ng-href="#/routes/show/{{route.ID}}">Zobacz</a>
-                    <a ng-href="#/bikes/edit/{{bike.ID}}" class="btn btn-info">Edytuj</a>
-                    <a ng-click="delete(route.ID)" class="btn btn-danger">Usuń</a>
+                    <a class="btn btn-info" ng-href="#/routes/edit/{{bike.ID}}">Edytuj</a>
+                    <a class="btn btn-danger" ng-click="delete(route.ID)">Usuń</a>
                 </td>
             </tr>
         </table>
