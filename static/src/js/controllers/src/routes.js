@@ -90,7 +90,7 @@ angular.module('controllers.routes').controller('RoutesShowCtrl', ['$scope', 'Ro
             $scope.new_comment.first_name = $scope.cur_user.first_name;
             $scope.new_comment.last_name = $scope.cur_user.last_name + " (Ty)";
 
-            $scope.route.comments.unshift(angular.copy($scope.new_comment));
+            $scope.route._comments.unshift(angular.copy($scope.new_comment));
             initNewComment();
         })
     };
