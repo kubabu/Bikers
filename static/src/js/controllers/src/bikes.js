@@ -1,9 +1,19 @@
 angular.module('controllers.bikes', []).controller('BikesCtrl', ['$scope', 'BikesSvc', function ($scope, BikesSvc) {
     $scope.bikes = [];
 
-    BikesSvc.getBikes().then(function (bikes) {
-        $scope.bikes = bikes;
-    });
+    $scope.getBikes = function () {
+        BikesSvc.getBikes().then(function (bikes) {
+            $scope.bikes = bikes;
+        });
+    };
+
+    $scope.delete = function (id) {
+        BikesSvc.deleteBike(id).then(function () {
+            $scope.getBikes();
+        })
+    };
+
+    $scope.getBikes();
 }]);
 
 angular.module('controllers.bikes').controller('BikesNewCtrl', ['$scope', '$location', 'BikesSvc', function ($scope, $location, BikesSvc) {

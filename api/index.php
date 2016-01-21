@@ -76,8 +76,12 @@ if (!empty($matches[2])) {
         $method = 'del';
     }
 
-    if (empty($input) && $method == 'get') {
-        $input = (object) $_GET;
+    if (empty($input) && in_array($method, ['get', 'del'])) {
+        if (!empty($_GET)) {
+            $input = json_decode(json_encode($_GET));
+        } else {
+            $input = new stdClass();
+        }
     }
 
     $db = null;
