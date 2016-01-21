@@ -1,0 +1,17 @@
+<form name="BikesEdit">
+    <div class="row">
+        <div class="col-xs-12" ng-controller="BikesEditCtrl">
+            <div class="form-group">
+                <label for="name">Nazwa roweru</label>
+                <input type="text" class="form-control" id="name" ng-model="bike.name" validator="required">
+            </div>
+            <div class="form-group">
+                <label for="description">Opis</label>
+                <input type="text" class="form-control" id="description" ng-model="bike.description">
+            </div>
+            <div class="form-group">
+                <button class="btn btn-primary" validation-submit="BikesEdit" ng-click="submit()">Zapisz</button>
+            </div>
+        </div>
+    </div>
+</form>
