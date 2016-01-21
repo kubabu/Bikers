@@ -10,6 +10,7 @@
                 <ol>
                     <li ng-repeat="part in bike._parts">
                         {{part.name}} <a class="btn btn-info btn-sm" ng-href="#/parts/edit/{{part.ID}}">Edytuj</a>
+                        <a class="btn btn-danger btn-sm" ng-click="deletePart(bike.ID, part.ID)">Usuń</a>
                     </li>
                 </ol>
             </div>

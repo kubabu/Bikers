@@ -61,7 +61,7 @@ class Parts extends BasicModule
 
         foreach ($data->data as $bikePart) {
             if (property_exists($bikePart, 'bike_ID') &&
-                is_numeric($bikePart->ID) &&
+                is_numeric($bikePart->bike_ID) &&
                 property_exists($bikePart, 'part_ID') &&
                 is_numeric($bikePart->part_ID)
             ) {
