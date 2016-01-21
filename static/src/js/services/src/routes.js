@@ -33,6 +33,24 @@ angular.module('services.routes', []).service('RoutesSvc', ['$http', '$q', 'url'
         return defer.promise;
     };
 
+    self.deleteUserRoute = function (id) {
+        var defer = $q.defer();
+
+        $http.delete(url + 'users/routes/', {
+            params: {
+                data: [{ID: id}]
+            }
+        }).then(function (res) {
+            if (res.data.status) {
+                defer.resolve(res.data.results);
+            } else {
+                defer.resolve([]);
+            }
+        });
+
+        return defer.promise;
+    };
+
     self.addRoute = function (route) {
         var defer = $q.defer();
 
@@ -64,7 +82,11 @@ angular.module('services.routes', []).service('RoutesSvc', ['$http', '$q', 'url'
     self.deleteRoute = function (id) {
         var defer = $q.defer();
 
-        $http.put(url + 'routes/', {data: [id]}).then(function (res) {
+        $http.delete(url + 'routes/', {
+            params: {
+                data: [{ID: id}]
+            }
+        }).then(function (res) {
             if (res.data.status) {
                 defer.resolve(res.data.results);
             } else {
