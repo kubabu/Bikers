@@ -12,6 +12,8 @@ angular.module('controllers.routes', []).controller('RoutesCtrl', ['$scope', 'Ro
             $scope.getRoutes();
         });
     };
+
+    $scope.getRoutes();
 }]);
 
 angular.module('controllers.routes').controller('RoutesShowCtrl', ['$scope', 'RoutesSvc', 'UsersSvc', function ($scope, RoutesSvc, UsersSvc) {
