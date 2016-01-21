@@ -4,10 +4,10 @@
             <div class="panel-heading">Trasa</div>
             <div class="panel-body">
                 <p><strong>Początek:</strong> {{route.from_dst}}</p>
-                <div ng-if="route.landmarks.length > 0">
+                <div ng-if="route._landmarks.length > 0">
                     <p><strong>Punkty na trasie:</strong></p>
                     <ol>
-                        <li ng-repeat="landmark in route.landmarks">{{landmark.value}}</li>
+                        <li ng-repeat="landmark in route._landmarks">{{landmark.value}}</li>
                     </ol>
                 </div>
                 <p><strong>Koniec:</strong> {{route.to_dst}}</p>
@@ -20,7 +20,7 @@
             <div class="panel-body">
                 <p><strong>Komentarze:</strong></p>
                 <div>
-                    <div ng-repeat="comment in route.comments">
+                    <div ng-repeat="comment in route._comments">
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <div class="row">
