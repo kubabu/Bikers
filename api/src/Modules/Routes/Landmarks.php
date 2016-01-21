@@ -84,5 +84,30 @@ class Landmarks extends BasicModule
         return $res;
     }
 
+    public function put($input)
+    {
+        $res = [];
+
+        if (!empty($this->user_ID)) {
+            $stmt = $this->db->prepare("UPDATE `routes_landmarks` SET `value` = :value WHERE `ID` = :ID");
+
+            foreach ($input->data as $landmark) {
+                if (property_exists($landmark, 'ID') && !empty($landmark->ID) && property_exists($landmark, 'value') && !empty($landmark->value)) {
+                    if ($stmt->execute([':ID' => $landmark->ID, ':value' => $landmark->value])) {
+                        $res[] = $landmark->ID;
+                    }
+                } else {
+                    $post = $this->post((object) ['data' => [$landmark]]);
+
+                    if (!empty($post)) {
+                        $res[] = $post[0];
+                    }
+                }
+            }
+        }
+
+        return $res;
+    }
+
 
 }

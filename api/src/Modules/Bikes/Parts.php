@@ -74,5 +74,10 @@ class Parts extends BasicModule
         return $res;
     }
 
+    public function put($data)
+    {
+        return [false];
+    }
+
 
 }

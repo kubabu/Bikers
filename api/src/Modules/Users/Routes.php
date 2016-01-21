@@ -135,5 +135,42 @@ class Routes extends BasicModule
         return $res;
     }
 
+    public function put($input)
+    {
+        $res = [];
 
+        if (!empty($this->user_ID)) {
+            foreach ($input->data as $route) {
+                if (property_exists($route, 'ID') && !empty($route->ID)) {
+                    $values = [':user_ID' => $this->user_ID, ':ID' => $route->ID];
+                    $fields = [];
+
+                    foreach($route as $field => $value) {
+                        if ($this->updateableField($field) && !in_array($field, ['from_dst', 'to_dst', 'name'])) {
+                            $fields[] = "$field = :$field";
+                            $values[":$field"] = $value;
+                        }
+                    }
+
+                    if (count($fields) > 0) {
+                        $q = "UPDATE users_routes SET " . implode(', ', $fields) . " WHERE ID = :ID AND user_ID = :user_ID";
+
+                        $stmt = $this->db->prepare($q);
+
+                        if ($stmt->execute($values)) {
+                            $res[] = $route->ID;
+                        }
+                    }
+                } else {
+                    $post = $this->post((object) ['data' => [$route]]);
+
+                    if (!empty($post)) {
+                        $res[] = $post[0];
+                    }
+                }
+            }
+        }
+
+        return $res;
+    }
 }

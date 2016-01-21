@@ -105,6 +105,41 @@ class Auth extends BasicModule
         return [false];
     }
 
+    public function put($input)
+    {
+        $res = [];
+
+        if (!empty($this->user_ID)) {
+            foreach ($input->data as $user) {
+                if (property_exists($user, 'ID') && $user->ID == $this->user_ID) {
+                    $values = [':user_ID' => $this->user_ID];
+                    $fields = [];
+
+                    foreach($user as $field => $value) {
+                        if ($this->updateableField($field) && !in_array($field, ['token', 'IP', 'password'])) {
+                            $fields[] = "$field = :$field";
+                            $values[":$field"] = $value;
+                        } elseif (strcmp($field, 'password') === 0) {
+                            $fields[] = "password = :password";
+                            $values[":password"] = md5($value);
+                        }
+                    }
+
+                    if (count($fields) > 0) {
+                        $q = "UPDATE users_auth SET " . implode(', ', $fields) . " WHERE ID = :ID AND user_ID = :user_ID";
+
+                        $stmt = $this->db->prepare($q);
+
+                        if ($stmt->execute($values)) {
+                            $res[] = $user->ID;
+                        }
+                    }
+                }
+            }
+        }
+
+        return $res;
+    }
 
     private function getRequestIp()
     {

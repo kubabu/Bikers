@@ -94,5 +94,40 @@ class Part extends BasicModule
         return $res;
     }
 
+    public function put($input)
+    {
+        $res = [];
 
+        if (!empty($this->user_ID)) {
+            foreach ($input->data as $part) {
+                if (property_exists($part, 'ID') && !empty($part->ID)) {
+                    $values = [':ID' => $part->ID];
+                    $fields = [];
+
+                    foreach ($part as $field => $value) {
+                        if ($this->updateableField($field)) {
+                            $fields[] = "$field = :$field";
+                            $values[":$field"] = $value;
+                        }
+                    }
+
+                    if (count($fields) > 0) {
+                        $q = "UPDATE parts SET " . implode(', ', $fields) . " WHERE ID = :ID";
+
+                        $stmt = $this->db->prepare($q);
+
+                        if ($stmt->execute($values)) {
+                            $res[] = $part->ID;
+                        }
+                    }
+                } else {
+                    $post = $this->post((object) ['data' => [$part]]);
+
+                    if (!empty($post)) {
+                        $res[] = $post[0];
+                    }
+                }
+            }
+        }
+    }
 }

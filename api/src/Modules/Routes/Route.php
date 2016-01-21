@@ -53,13 +53,13 @@ class Route extends BasicModule
             if ($routes = $stmt->fetchAll(\PDO::FETCH_OBJ)) {
                 if (property_exists($data, '_landmarks') && $data->_landmarks) {
                     foreach ($routes as $route) {
-                        $route->landmarks = $routesLandmarks->get((object)['route_ID' => $route->ID]);
+                        $route->_landmarks = $routesLandmarks->get((object)['route_ID' => $route->ID]);
                     }
                 }
 
                 if (property_exists($data, '_comments') && $data->_comments) {
                     foreach ($routes as $route) {
-                        $route->comments = $routesComments->get((object)['route_ID' => $route->ID]);
+                        $route->_comments = $routesComments->get((object)['route_ID' => $route->ID]);
                     }
                 }
             }
@@ -89,7 +89,7 @@ class Route extends BasicModule
                     $usersRoutes->post((object) ['data' => [$route]]);
                 }
 
-                foreach ($route->landmarks as $landmark) {
+                foreach ($route->_landmarks as $landmark) {
                     $landmark->route_ID = $route->ID;
                     $routesLandmarks->post((object) ['data' => [$landmark]]);
                 }
@@ -117,5 +117,40 @@ class Route extends BasicModule
         return $res;
     }
 
+    public function put($input) {
+        $res = [];
 
+        $routesLandmarks = new Landmarks($this->db);
+
+        if (!empty($this->user_ID)) {
+            foreach ($input->data as $route) {
+                $values = [':ID' => $route->ID];
+                $fields = [];
+
+                foreach ($route as $field => $value) {
+                    if ($this->updateableField($field) && !in_array($field, ['date_of_ride', 'duration_of_ride', 'bike_ID'])) {
+                        $fields[] = "$field = :$field";
+                        $values[":$field"] = $value;
+                    }
+                }
+
+                if (count($fields) > 0) {
+                    $q = "UPDATE routes SET " . implode(', ', $fields) . " WHERE ID = :ID";
+
+                    $stmt = $this->db->prepare($q);
+
+                    if ($stmt->execute($values)) {
+                        $res[] = $route->ID;
+                    }
+                }
+
+                foreach ($route->_landmarks as $landmark) {
+                    $landmark->route_ID = $route->ID;
+                    $routesLandmarks->put((object)['data' => [$landmark]]);
+                }
+            }
+        }
+
+        return $res;
+    }
 }
