@@ -46,7 +46,11 @@ angular.module('services.bikes', []).service('BikesSvc', ['$http', '$q', 'url', 
     self.deleteBike = function (id) {
         var defer = $q.defer();
 
-        $http.put(url + 'bikes/', {data: [id]}).then(function (res) {
+        $http.delete(url + 'bikes/', {
+            params: {
+                data: [{ID: id}]
+            }
+        }).then(function (res) {
             if (res.data.status) {
                 defer.resolve(res.data.results);
             } else {

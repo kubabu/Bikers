@@ -38,6 +38,8 @@ app.config(function ($routeProvider, $locationProvider, $httpProvider) {
         }
     }; //check auth before any routing
 
+    $httpProvider.defaults.paramSerializer = '$httpParamSerializerJQLike';
+
     $routeProvider
         .when('/', {
             templateUrl: 'src/templates/desktop/main.html',
