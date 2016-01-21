@@ -60,7 +60,18 @@ class User extends BasicModule
 
     public function del($data)
     {
-        // TODO: Implement del() method.
+        $res = [];
+        $stmt = $this->db->prepare("DELETE FROM users WHERE ID = :id");
+
+        foreach ($data->data as $user) {
+            if (property_exists($user, 'ID') && is_numeric($user->ID)) {
+                if ($stmt->execute([':id' => $user->ID])) {
+                    $res[] = $user->ID;
+                }
+            }
+        }
+
+        return $res;
     }
 
     public function post($data)

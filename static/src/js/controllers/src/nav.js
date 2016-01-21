@@ -13,9 +13,9 @@ angular.module('controllers.nav', []).controller('NavCtrl', ['$scope', 'AuthSvc'
 
     $rootScope.background = random();
 
-    $interval(function () {
-        $rootScope.background = random();
-    }, 10000);
+    //$interval(function () {
+    //    $rootScope.background = random();
+    //}, 10000);
 
     $scope.logout = function () {
         AuthSvc.logout(true);

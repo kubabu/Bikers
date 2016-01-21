@@ -118,4 +118,22 @@ class Routes extends BasicModule
 
         return $res;
     }
+
+    public function del($data)
+    {
+        $res = [];
+        $stmt = $this->db->prepare("DELETE FROM users_routes WHERE ID = :id");
+
+        foreach ($data->data as $route) {
+            if (property_exists($route, 'ID') && is_numeric($route->ID)) {
+                if ($stmt->execute([':id' => $route->ID])) {
+                    $res[] = $route->ID;
+                }
+            }
+        }
+
+        return $res;
+    }
+
+
 }

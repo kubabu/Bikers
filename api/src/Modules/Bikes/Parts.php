@@ -53,4 +53,26 @@ class Parts extends BasicModule
 
         return $res;
     }
+
+    public function del($data)
+    {
+        $res = [];
+        $stmt = $this->db->prepare("DELETE FROM bikes_parts WHERE bike_ID = :bike AND part_ID = :part");
+
+        foreach ($data->data as $bikePart) {
+            if (property_exists($bikePart, 'bike_ID') &&
+                is_numeric($bikePart->ID) &&
+                property_exists($bikePart, 'part_ID') &&
+                is_numeric($bikePart->part_ID)
+            ) {
+                if ($stmt->execute([':bike' => $bikePart->bike_ID, ':part' => $bikePart->part_ID])) {
+                    $res[] = $bikePart;
+                }
+            }
+        }
+
+        return $res;
+    }
+
+
 }

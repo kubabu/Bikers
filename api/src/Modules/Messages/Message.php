@@ -101,4 +101,22 @@ class Message extends BasicModule
 
         return $res;
     }
+
+    public function del($data)
+    {
+        $res = [];
+        $stmt = $this->db->prepare("DELETE FROM messages WHERE ID = :id");
+
+        foreach ($data->data as $message) {
+            if (property_exists($message, 'ID') && is_numeric($message->ID)) {
+                if ($stmt->execute([':id' => $message->ID])) {
+                    $res[] = $message->ID;
+                }
+            }
+        }
+
+        return $res;
+    }
+
+
 }

@@ -67,4 +67,22 @@ class Landmarks extends BasicModule
 
         return $res;
     }
+
+    public function del($data)
+    {
+        $res = [];
+        $stmt = $this->db->prepare("DELETE FROM routes_landmarks WHERE ID = :id");
+
+        foreach ($data->data as $landmark) {
+            if (property_exists($landmark, 'ID') && is_numeric($landmark->ID)) {
+                if ($stmt->execute([':id' => $landmark->ID])) {
+                    $res[] = $landmark->ID;
+                }
+            }
+        }
+
+        return $res;
+    }
+
+
 }

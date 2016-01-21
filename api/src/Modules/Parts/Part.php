@@ -77,4 +77,22 @@ class Part extends BasicModule
 
         return $res;
     }
+
+    public function del($data)
+    {
+        $res = [];
+        $stmt = $this->db->prepare("DELETE FROM parts WHERE ID = :id");
+
+        foreach ($data->data as $part) {
+            if (property_exists($part, 'ID') && is_numeric($part->ID)) {
+                if ($stmt->execute([':id' => $part->ID])) {
+                    $res[] = $part->ID;
+                }
+            }
+        }
+
+        return $res;
+    }
+
+
 }

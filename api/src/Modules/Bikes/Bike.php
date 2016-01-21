@@ -57,7 +57,18 @@ class Bike extends BasicModule
 
     public function del($data)
     {
-        // TODO: Implement del() method.
+        $res = [];
+        $stmt = $this->db->prepare("DELETE FROM bikes WHERE ID = :id");
+
+        foreach ($data->data as $bike) {
+            if (property_exists($bike, 'ID') && is_numeric($bike->ID)) {
+                if ($stmt->execute([':id' => $bike->ID])) {
+                    $res[] = $bike->ID;
+                }
+            }
+        }
+
+        return $res;
     }
 
     public function post($input)
