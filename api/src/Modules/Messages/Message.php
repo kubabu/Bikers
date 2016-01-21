@@ -118,5 +118,42 @@ class Message extends BasicModule
         return $res;
     }
 
+    public function put($input)
+    {
+        $res = [];
 
+        if (!empty($this->user_ID)) {
+            foreach ($input->data as $message) {
+                if (property_exists($message, 'ID') && !empty($message->ID)) {
+                    $values = [':user_ID' => $this->user_ID, ':ID' => $message->ID];
+                    $fields = [];
+
+                    foreach($message as $field => $value) {
+                        if ($this->updateableField($field) && !in_array($field, ['to_user', 'date_read'])) {
+                            $fields[] = "$field = :$field";
+                            $values[":$field"] = $value;
+                        }
+                    }
+
+                    if (count($fields) > 0) {
+                        $q = "UPDATE messages SET " . implode(', ', $fields) . " WHERE ID = :ID AND from_user = :user_ID";
+
+                        $stmt = $this->db->prepare($q);
+
+                        if ($stmt->execute($values)) {
+                            $res[] = $message->ID;
+                        }
+                    }
+                } else {
+                    $post = $this->post((object) ['data' => [$message]]);
+
+                    if (!empty($post)) {
+                        $res[] = $post[0];
+                    }
+                }
+            }
+        }
+
+        return $res;
+    }
 }

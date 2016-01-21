@@ -92,4 +92,29 @@ class Comments extends BasicModule
 
         return $res;
     }
+
+    public function put($input)
+    {
+        $res = [];
+
+        if (!empty($this->user_ID)) {
+            $stmt = $this->db->prepare("UPDATE `routes_comments` SET `value` = :value WHERE `ID` = :ID");
+
+            foreach ($input->data as $comment) {
+                if (property_exists($comment, 'ID') && !empty($comment->ID) && property_exists($comment, 'value') && !empty($comment->value)) {
+                    if ($stmt->execute([':ID' => $comment->ID, ':value' => $comment->value])) {
+                        $res[] = $comment->ID;
+                    }
+                } else {
+                    $post = $this->post((object) ['data' => [$comment]]);
+
+                    if (!empty($post)) {
+                        $res[] = $post[0];
+                    }
+                }
+            }
+        }
+
+        return $res;
+    }
 }
