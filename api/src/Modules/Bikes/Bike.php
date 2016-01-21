@@ -94,8 +94,36 @@ class Bike extends BasicModule
         return $res;
     }
 
-    public function put($data)
+    public function put($input)
     {
-        // TODO: Implement put() method.
+        $res = [];
+
+        if (!empty($this->user_ID)) {
+            foreach ($input->data as $bike) {
+                if (property_exists($bike, 'ID') && !empty($bike->ID)) {
+                    $values = [':user_ID' => $this->user_ID, ':ID' => $bike->ID];
+                    $fields = [];
+
+                    foreach($bike as $field => $value) {
+                         if ($this->updateableField($field)) {
+                            $fields[] = "$field = :$field";
+                            $values[":$field"] = $value;
+                        }
+                    }
+
+                    if (count($fields) > 0) {
+                        $q = "UPDATE bikes SET " . implode(', ', $fields) . " WHERE ID = :ID AND user_ID = :user_ID";
+
+                        $stmt = $this->db->prepare($q);
+
+                        if ($stmt->execute($values)) {
+                            $res[] = $bike->ID;
+                        }
+                    }
+                }
+            }
+        }
+
+        return $res;
     }
 }

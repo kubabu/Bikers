@@ -29,6 +29,26 @@ angular.module('controllers.bikes').controller('BikesNewCtrl', ['$scope', '$loca
     }
 }]);
 
+angular.module('controllers.bikes').controller('BikesEditCtrl', ['$scope', '$location', 'BikesSvc', function ($scope, $location, BikesSvc) {
+    $scope.bike = {};
+
+    if (angular.isDefined($scope.$parent.ID) && !isNaN($scope.$parent.ID)) {
+        BikesSvc.getBikes({id: $scope.$parent.ID}).then(function (bikes) {
+            $scope.bike = bikes[0];
+        });
+    }
+
+    $scope.submit = function () {
+        BikesSvc.editBike($scope.bike).then(function (res) {
+            if(res.length > 0){
+                $location.path('/bikes/show/' + res[0]);
+            } else {
+                $location.path('/bikes/');
+            }
+        });
+    }
+}]);
+
 angular.module('controllers.bikes').controller('BikesShowCtrl', ['$scope', 'BikesSvc', function ($scope, BikesSvc) {
     $scope.bike = {};
 

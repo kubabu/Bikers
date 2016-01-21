@@ -83,4 +83,12 @@ class BasicModule implements ModuleInterface
 
         return $data;
     }
+
+    public function updateableField($field) {
+        return strpos($field, '_') !== 0 &&
+            strpos($field, 'ID') !== 0 &&
+            strcmp($field, 'date_create') !== 0 &&
+            strcmp($field, 'date_update') !== 0 &&
+            strcmp($field, 'user_ID') !== 0;
+    }
 }
