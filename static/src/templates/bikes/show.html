@@ -42,12 +42,14 @@
                     Dodaj nowy komentarz
                 </div>
                 <div class="panel-body">
-                    <div class="form-group">
-                        <textarea type="text" class="form-control" ng-model="new_comment.value"></textarea>
-                    </div>
-                    <div>
-                        <button class="btn btn-primary" ng-click="addComment()">Zapisz</button>
-                    </div>
+                    <form name="AddComment">
+                        <div class="form-group">
+                            <textarea type="text" class="form-control" ng-model="new_comment.value" validator="required"></textarea>
+                        </div>
+                        <div>
+                            <button class="btn btn-primary" validation-submit="AddComment" ng-click="addComment()">Zapisz</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
