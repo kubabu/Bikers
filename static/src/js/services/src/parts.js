@@ -46,7 +46,11 @@ angular.module('services.parts', []).service('PartsSvc', ['$http', '$q', 'url', 
     self.deletePart = function (id) {
         var defer = $q.defer();
 
-        $http.put(url + 'parts/', {data: [id]}).then(function (res) {
+        $http.delete(url + 'parts/', {
+            params: {
+                data: [{ID: id}]
+            }
+        }).then(function (res) {
             if (res.data.status) {
                 defer.resolve(res.data.results);
             } else {
