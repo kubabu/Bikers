@@ -23,8 +23,8 @@ class Message extends BasicModule
         $res = [];
 
         if (!empty($this->user_ID)) {
-            if (property_exists($input, '_read') && !empty($input->_read)) {
-                return [$this->setRead($input->_read)];
+            if (property_exists($input, '_read') && !empty($input->_read) && count($input->data) > 0) {
+                return [$this->setRead($input->data[0])];
             }
 
             $q = "INSERT INTO messages (from_user, to_user, value, date_create) VALUES (:from, :to, :value, NOW())";
@@ -165,16 +165,11 @@ class Message extends BasicModule
         return $res;
     }
 
-    private function setRead($messageId) {
-        $stmt = $this->db->prepare("CALL message_read(:id, :user)");
+    private function setRead($message) {
+        $stmt = $this->db->prepare("CALL message_read('$message->ID', '$this->user_ID', '$message->from_user')");
 
-        if (is_int($messageId) && $messageId > 0) {
-            if ($stmt->execute([
-                ':id' => $messageId,
-                ':user' => $this->user_ID
-            ])) {
-                return true;
-            }
+        if ($stmt->execute()) {
+            return true;
         } else {
             return false;
         }

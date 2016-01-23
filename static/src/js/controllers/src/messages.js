@@ -20,7 +20,7 @@ angular.module('controllers.messages').controller('MessagesNewCtrl', ['$scope', 
             $scope.previous_messages = messages;
 
             if (messages.length > 0) {
-                MessagesSvc.setRead(messages[messages.length - 1].ID);
+                MessagesSvc.setRead(messages[0]);
             }
         });
     }

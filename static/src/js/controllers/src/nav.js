@@ -1,4 +1,4 @@
-angular.module('controllers.nav', []).controller('NavCtrl', ['$scope', 'AuthSvc', '$interval', '$rootScope', function ($scope, AuthSvc, $interval, $rootScope) {
+angular.module('controllers.nav', []).controller('NavCtrl', ['$scope', 'AuthSvc', '$interval', '$rootScope', 'MessagesSvc', function ($scope, AuthSvc, $interval, $rootScope, MessagesSvc) {
     $scope.unread_msg_count = 0;
     $scope.urls = [
         {path: '#/users/', name: 'Tablica', active: false},
@@ -13,9 +13,11 @@ angular.module('controllers.nav', []).controller('NavCtrl', ['$scope', 'AuthSvc'
 
     $rootScope.background = random();
 
-    //$interval(function () {
-    //    $rootScope.background = random();
-    //}, 10000);
+    $interval(function () {
+        MessagesSvc.getUnread().then(function (unread) {
+            $scope.unread_msg_count = unread;
+        });
+    }, 8000);
 
     $scope.logout = function () {
         AuthSvc.logout(true);

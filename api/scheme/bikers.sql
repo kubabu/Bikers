@@ -247,14 +247,11 @@ CREATE FUNCTION unread_message_count(user_ID INT)
 DELIMITER ;
 
 DELIMITER $$
-CREATE PROCEDURE `message_read`(IN message_ID INT, IN user_ID INT)
+CREATE PROCEDURE `message_read`(IN message_ID INT, IN to_USER INT, IN from_USER INT)
   BEGIN
     UPDATE bikers.messages
     SET date_read = NOW()
-    WHERE ID IN (SELECT m.ID
-                 FROM bikers.messages m INNER JOIN bikers.messages mm
-                     ON m.ID <= mm.ID AND m.from_user = mm.from_user AND mm.to_user = m.to_user
-                 WHERE m.date_read IS NULL AND m.to_user = user_ID AND mm.ID = message_ID);
+    WHERE date_read IS NULL AND to_user = to_USER AND from_user = from_USER AND ID <= message_ID;
   END$$
 DELIMITER ;
 
