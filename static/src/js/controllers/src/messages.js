@@ -19,9 +19,9 @@ angular.module('controllers.messages').controller('MessagesNewCtrl', ['$scope', 
         MessagesSvc.getMessages({_limit: 5, _order: false, _receiver: $scope.$parent.ID}).then(function (messages) {
             $scope.previous_messages = messages;
 
-            angular.forEach($scope.previous_messages, function (message) {
-                MessagesSvc.setRead(message.ID);
-            });
+            if (messages.length > 0) {
+                MessagesSvc.setRead(messages[0]);
+            }
         });
     }
 
