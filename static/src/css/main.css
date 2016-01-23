@@ -59,6 +59,9 @@ textarea {
     color: #3c763d;
 }
 
+span > .alert.alert-danger {
+    margin-top: 20px;
+}
 /*
 body.background-1 {
     background-size: cover;
