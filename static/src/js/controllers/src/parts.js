@@ -28,7 +28,11 @@ angular.module('controllers.parts').controller('PartsNewCtrl', ['$scope', '$loca
             if(res.length > 0){
                 $location.path('/bikes/show/' + $scope.part._bike_ID);
             } else {
-                $location.path('/bikes/');
+                if($location.url().match('/bikes/')) {
+                    $location.path('/bikes/');
+                } else {
+                    $location.path('/parts/');
+                }
             }
         });
     };
