@@ -162,9 +162,17 @@ DELIMITER //
 CREATE FUNCTION unread_message_count (user_ID INT)
   RETURNS INT DETERMINISTIC READS SQL DATA
 BEGIN
-  RETURN (SELECT COUNT(*) FROM messages msg WHERE msg.date_read IS NULL AND msg.to_user = user_ID);
+  RETURN (SELECT COUNT(*) FROM bikers.messages msg WHERE msg.date_read IS NULL AND msg.to_user = user_ID);
 END //
 DELIMITER ;
+
+DELIMITER $$
+CREATE PROCEDURE `message_read`(IN message_ID INT, IN user_ID INT)
+  BEGIN
+    UPDATE bikers.messages SET date_read = NOW() WHERE ID = message_ID AND to_user = user_ID AND date_read IS NULL;
+  END$$
+DELIMITER ;
+
 
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

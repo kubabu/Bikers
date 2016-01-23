@@ -61,5 +61,19 @@ angular.module('services.messages', []).service('MessagesSvc', ['$http', '$q', '
         return defer.promise;
     };
 
+    self.setRead = function (id) {
+        var defer = $q.defer();
+
+        $http.post(url + 'messages/', {_read: id}).then(function (res) {
+            if (res.data.status) {
+                defer.resolve(res.data.results[0]);
+            } else {
+                defer.resolve([]);
+            }
+        });
+
+        return defer.promise;
+    };
+
     return self;
 }]);
