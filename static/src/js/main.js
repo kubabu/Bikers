@@ -12,7 +12,7 @@ var app = angular.module('bikersApp', ['ngRoute', 'services', 'controllers', 'ui
 
 app.constant('url', 'http://localhost/bikers/api/v1/'); //default api path
 
-app.config(function ($routeProvider, $locationProvider, $httpProvider) {
+app.config(function ($routeProvider, $locationProvider, $httpProvider, $validationProvider) {
     var resolve = {
         token: function ($q) {
             var defer = $q.defer();
@@ -39,6 +39,33 @@ app.config(function ($routeProvider, $locationProvider, $httpProvider) {
     }; //check auth before any routing
 
     $httpProvider.defaults.paramSerializer = '$httpParamSerializerJQLike';
+
+    $validationProvider.setDefaultMsg({
+        required: {
+            error: 'To pole jest wymagane!!',
+            success: ''
+        },
+        url: {
+            error: 'To pole powinno być adresem URL',
+            success: ''
+        },
+        email: {
+            error: 'To pole powinno być adresem e-mail',
+            success: ''
+        },
+        number: {
+            error: 'To pole powinno być liczbą',
+            success: ''
+        },
+        minlength: {
+            error: 'To pole powinno być dłuższe',
+            success: ''
+        },
+        maxlength: {
+            error: 'To pole powinno być krótsze',
+            success: ''
+        }
+    });
 
     $routeProvider
         .when('/', {
