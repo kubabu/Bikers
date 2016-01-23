@@ -1,7 +1,7 @@
 <form name="MessageNew">
     <div class="row">
         <div class="col-xs-12" ng-controller="MessagesNewCtrl">
-            <div class="panel panel-info" ng-if="previous_messages">
+            <div class="panel panel-info" ng-if="previous_messages.length > 0">
                 <div class="panel-heading">Poprzednie wiadmości</div>
                 <div class="panel-body">
                     <table class="table table-responsive table-hover">

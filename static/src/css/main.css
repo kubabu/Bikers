@@ -39,43 +39,11 @@ textarea {
 span > .alert.alert-danger {
     margin-top: 20px;
 }
-/*
-body.background-1 {
-    background-size: cover;
-    background: #fff url(src/images/backgrounds/bike-1.jpg) 0 0 no-repeat;
+
+table.table {
+    font-size: 16px;
 }
 
-body.background-2 {
-    background-size: cover;
-    background: #fff url(src/images/backgrounds/bike-2.jpg) 0 0 no-repeat;
+.navbar {
+    font-size: 14px;
 }
-
-body.background-3 {
-    background-size: cover;
-    background: #fff url(src/images/backgrounds/bike-3.jpg) 0 0 no-repeat;
-}
-
-body.background-4 {
-    background-size: cover;
-    background: #fff url(src/images/backgrounds/bike-4.jpg) 0 0 no-repeat;
-}
-
-body.background-5 {
-    background-size: cover;
-    background: #fff url(src/images/backgrounds/bike-5.jpg) 0 0 no-repeat;
-}
-
-body.background-6 {
-    background-size: cover;
-    background: #fff url(src/images/backgrounds/bike-6.jpg) 0 0 no-repeat;
-}
-
-body.background-7 {
-    background-size: cover;
-    background: #fff url(src/images/backgrounds/bike-7.jpg) 0 0 no-repeat;
-}
-
-body.background-8 {
-    background-size: cover;
-    background: #fff url(src/images/backgrounds/bike-8.jpg) 0 0 no-repeat;
-}*/
