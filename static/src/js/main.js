@@ -67,6 +67,12 @@ app.config(function ($routeProvider, $locationProvider, $httpProvider, $validati
         }
     });
 
+    $validationProvider.setErrorHTML(function (msg, element, attrs) {
+        return '<div class="alert alert-danger" role="alert"> \
+            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> \
+            <span class="sr-only">Error:</span>' + msg + '</div>';
+    });
+
     $routeProvider
         .when('/', {
             templateUrl: 'src/templates/desktop/main.html',
