@@ -49,6 +49,10 @@ class Message extends BasicModule
     {
         $res = [];
 
+        if (property_exists($data, '_unread') && !empty($data->_unread)) {
+            return $this->getUnread();
+        }
+
         $q = "SELECT m.ID, m.from_user, uf.first_name from_first, uf.last_name from_last, m.to_user, ut.first_name to_first, ut.last_name to_last, m.value, m.date_create, m.date_read FROM messages m INNER JOIN users uf ON uf.ID = m.from_user INNER JOIN users ut ON ut.ID = m.to_user";
         $wheres = ['(m.from_user = :user OR m.to_user = :user)'];
         $params = [':user' => $this->user_ID];
@@ -161,7 +165,7 @@ class Message extends BasicModule
         return $res;
     }
 
-    public function setRead($messageId) {
+    private function setRead($messageId) {
         $stmt = $this->db->prepare("CALL message_read(:id, :user)");
 
         if (is_int($messageId) && $messageId > 0) {
@@ -173,6 +177,24 @@ class Message extends BasicModule
             }
         } else {
             return false;
+        }
+    }
+
+    private function getUnread() {
+        $stmt = $this->db->prepare("SELECT unread_message_count(:user) msg_count");
+
+        if (!empty($this->user_ID)) {
+            if ($stmt->execute([
+                ':user' => $this->user_ID
+            ])) {
+                $unread = $stmt->fetch(\PDO::FETCH_OBJ);
+
+                if (!empty($unread) && property_exists($unread, 'msg_count')) {
+                    return $unread->msg_count;
+                }
+            }
+        } else {
+            return 0;
         }
     }
 }
