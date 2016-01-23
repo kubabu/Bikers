@@ -54,7 +54,7 @@ angular.module('controllers.routes').controller('RoutesEditCtrl', ['$scope', '$l
     };
 }]);
 
-angular.module('controllers.routes').controller('RoutesShowCtrl', ['$scope', 'RoutesSvc', 'UsersSvc', function ($scope, RoutesSvc, UsersSvc) {
+angular.module('controllers.routes').controller('RoutesShowCtrl', ['$scope', '$location', 'RoutesSvc', 'UsersSvc', function ($scope, $location, RoutesSvc, UsersSvc) {
     $scope.route = {};
     $scope.new_comment = {};
 
@@ -63,6 +63,13 @@ angular.module('controllers.routes').controller('RoutesShowCtrl', ['$scope', 'Ro
             route_ID: angular.copy($scope.route.ID)
         };
     }
+
+    $scope.delete = function (id) {
+        RoutesSvc.deleteUserRoute(id).then(function () {
+            $location.path('/routes/');
+        });
+    };
+
 
     UsersSvc.getUsers({"_me": true}).then(function(resp){
         if(angular.isArray(resp) && resp.length > 0) {
