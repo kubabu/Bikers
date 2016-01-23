@@ -11,6 +11,10 @@
                     </ol>
                 </div>
                 <p><strong>Koniec:</strong> {{route.to_dst}}</p>
+                <td>
+                    <a class="btn btn-info" ng-href="#/routes/edit/{{route.ID}}">Edytuj</a>
+                    <a class="btn btn-danger" ng-click="delete(route.ID)">Usuń</a>
+                </td>
             </div>
             <div class="panel-footer">
                 <p><strong>Rower</strong> {{route._bike.name}}</p>
@@ -39,7 +43,7 @@
                     </div>
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                        Dodaaj nowy komentarz
+                        Dodaj nowy komentarz
                         </div>
                         <div class="panel-body">
                             <form name="newComment">
