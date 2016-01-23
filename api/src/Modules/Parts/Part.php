@@ -60,10 +60,10 @@ class Part extends BasicModule
                         ':name' => $part->name,
                         ':desc' => $part->description
                     ])) {
-                        if(!empty($part->_bike_ID)) {
-                            $id = $this->db->lastInsertId();
-                            $res[] = $id;
+                        $id = $this->db->lastInsertId();
+                        $res[] = $id;
 
+                        if(!empty($part->_bike_ID)) {
                             $bikesParts->post((object) ['data' => [(object) ['bike_ID' => $part->_bike_ID, 'part_ID' => $id]]]);
                         }
                     }

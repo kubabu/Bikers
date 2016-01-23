@@ -44,4 +44,6 @@ angular.module('controllers.parts').controller('PartsCtrl', ['$scope', 'PartsSvc
     PartsSvc.getParts().then(function (parts) {
         $scope.parts = parts;
     });
+
+    $scope.delete()
 }]);
