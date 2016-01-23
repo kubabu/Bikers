@@ -1,19 +1,21 @@
 <div class="row">
     <div class="col-xs-12" ng-controller="UsersEditCtrl">
-        <div class="form-group">
-            <label for="login">Nazwa użytkownika</label>
-            <input type="text" class="form-control" id="login" ng-model="user._auth_username" ng-disabled="true">
-        </div>
-        <div class="form-group">
-            <label for="first_name">Imię</label>
-            <input type="text" class="form-control" id="first_name" ng-model="user.first_name">
-        </div>
-        <div class="form-group">
-            <label for="last_name">Nazwisko</label>
-            <input type="text" class="form-control" id="last_name" ng-model="user.last_name">
-        </div>
-        <div class="form-group">
-            <button class="btn btn-primary" ng-click="submit()">Zapisz</button>
-        </div>
+        <form name="UserEdit">
+            <div class="form-group">
+                <label for="login">Nazwa użytkownika</label>
+                <input type="text" class="form-control" id="login" ng-model="user._auth_username" ng-disabled="true" validator="required">
+            </div>
+            <div class="form-group">
+                <label for="first_name">Imię</label>
+                <input type="text" class="form-control" id="first_name" ng-model="user.first_name" validator="required">
+            </div>
+            <div class="form-group">
+                <label for="last_name">Nazwisko</label>
+                <input type="text" class="form-control" id="last_name" ng-model="user.last_name" validator="required">
+            </div>
+            <div class="form-group">
+                <button class="btn btn-primary" ng-click="submit()" validation-submit="UserEdit">Zapisz</button>
+            </div>
+        </form>
     </div>
 </div>
