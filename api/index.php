@@ -111,6 +111,3 @@ if (!empty($matches[2])) {
 } else {
     fail("Error: Invalid api path");
 }
-
-
-?>

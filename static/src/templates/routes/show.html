@@ -7,7 +7,7 @@
                 <div ng-if="route._landmarks.length > 0">
                     <p><strong>Punkty na trasie:</strong></p>
                     <ol>
-                        <li ng-repeat="landmark in route._landmarks">{{landmark.value}}</li>
+                        <li class="form-group" ng-repeat="landmark in route._landmarks">{{landmark.value}}</li>
                     </ol>
                 </div>
                 <p><strong>Koniec:</strong> {{route.to_dst}}</p>

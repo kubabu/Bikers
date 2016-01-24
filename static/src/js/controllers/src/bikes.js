@@ -82,8 +82,8 @@ angular.module('controllers.bikes').controller('BikesShowCtrl', ['$scope', 'Bike
     $scope.addComment = function(){
         BikesSvc.addBikeComment($scope.new_comment).then(function (){
             $scope.new_comment.date_create = new Date();
-            $scope.new_comment.first_name = $scope.cur_user.first_name;
-            $scope.new_comment.last_name = $scope.cur_user.last_name + " (Ty)";
+            $scope.new_comment._first_name = $scope.cur_user.first_name;
+            $scope.new_comment._last_name = $scope.cur_user.last_name;
 
             $scope.bike._comments.unshift(angular.copy($scope.new_comment));
             initNewComment();
