@@ -82,9 +82,9 @@ angular.module('controllers.routes').controller('RoutesShowCtrl', ['$scope', '$l
             $scope.route = routes[0];
             initNewComment();
 
-            if(angular.isArray($scope.route.comments) && $scope.route.comments.length > 0) {
-                $scope.route.comments = $scope.route.comments.map(function(comment){
-                    comment.date_create =  moment(comment.date_create).valueOf();
+            if(angular.isArray($scope.route._comments) && $scope.route._comments.length > 0) {
+                $scope.route._comments = $scope.route._comments.map(function(comment){
+                    comment.date_create =  moment(comment.date_create).toDate();
                     return comment;
                 })
             }

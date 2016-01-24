@@ -69,11 +69,11 @@ angular.module('controllers.bikes').controller('BikesShowCtrl', ['$scope', 'Bike
                 $scope.bike = bikes[0];
                 initNewComment();
 
-                if(angular.isArray($scope.bike.comments) && $scope.bike.comments.length > 0) {
-                    $scope.bike.comments = $scope.bike.comments.map(function(comment){
-                        comment.date_create =  moment(comment.date_create).valueOf();
+                if(angular.isArray($scope.bike._comments) && $scope.bike._comments.length > 0) {
+                    $scope.bike._comments = $scope.bike._comments.map(function(comment){
+                        comment.date_create =  moment(comment.date_create).toDate();
                         return comment;
-                    })
+                    });
                 }
             });
         }
