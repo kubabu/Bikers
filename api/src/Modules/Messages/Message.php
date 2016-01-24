@@ -68,7 +68,8 @@ class Message extends BasicModule
         }
 
         if (property_exists($data, '_group') && !empty($data->_group)) {
-            $q .= ' INNER JOIN (SELECT MAX(ID) ID FROM messages GROUP BY from_user, to_user) AS msg ON m.ID = msg.ID ';
+//            $q .= ' INNER JOIN (SELECT MAX(ID) ID FROM messages GROUP BY from_user, to_user) AS msg ON m.ID = msg.ID ';
+            $q .= ' INNER JOIN (SELECT MAX(mmm.ID) ID FROM messages mmm LEFT JOIN messages mmmm ON mmm.from_user = mmmm.to_user WHERE mmm.from_user = :user OR mmm.to_user = :user GROUP BY LEAST(mmm.to_user, mmm.from_user), GREATEST(mmm.from_user, mmm.to_user)) AS msg ON m.ID = msg.ID ';
         }
 
         if (count($wheres) > 0) {
