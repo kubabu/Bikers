@@ -74,7 +74,7 @@ angular.module('controllers.bikes').controller('BikesShowCtrl', ['$scope', 'Bike
                         comment.date_create =  moment(comment.date_create).toDate();
                         return comment;
                     });
-                }git
+                }
             });
         }
     };
