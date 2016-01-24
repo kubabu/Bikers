@@ -26,9 +26,11 @@ angular.module('controllers.parts').controller('PartsNewCtrl', ['$scope', '$loca
     $scope.submit = function () {
         PartsSvc.addPart($scope.part).then(function (res) {
             if(res.length > 0){
-                $location.path('/bikes/show/' + $scope.part._bike_ID);
-            } else {
-                $location.path('/bikes/');
+                if(angular.isDefined($scope.part._bike_ID) && typeof $scope.part._bike_ID != 'undefined') {
+                    $location.path('/bikes/show/' + $scope.part._bike_ID);
+                } else {
+                    $location.path('/parts/');
+                }
             }
         });
     };
@@ -37,7 +39,17 @@ angular.module('controllers.parts').controller('PartsNewCtrl', ['$scope', '$loca
 angular.module('controllers.parts').controller('PartsCtrl', ['$scope', 'PartsSvc', function ($scope, PartsSvc) {
     $scope.parts = [];
 
-    PartsSvc.getParts().then(function (parts) {
-        $scope.parts = parts;
-    });
+    getParts = function(){
+        PartsSvc.getParts().then(function (parts) {
+            $scope.parts = parts;
+        });
+    };
+
+    getParts();
+
+    $scope.delete = function (id) {
+        PartsSvc.deletePart(id).then(function () {
+            getParts();
+        });
+    };
 }]);

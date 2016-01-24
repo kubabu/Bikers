@@ -56,14 +56,16 @@ class Part extends BasicModule
                 $stmt = $this->db->prepare($q);
 
                 foreach ($input->data as $part) {
-                    if (!empty($part->_bike_ID) && $stmt->execute([
+                    if ($stmt->execute([
                         ':name' => $part->name,
                         ':desc' => $part->description
                     ])) {
                         $id = $this->db->lastInsertId();
                         $res[] = $id;
 
-                        $bikesParts->post((object) ['data' => [(object) ['bike_ID' => $part->_bike_ID, 'part_ID' => $id]]]);
+                        if(!empty($part->_bike_ID)) {
+                            $bikesParts->post((object) ['data' => [(object) ['bike_ID' => $part->_bike_ID, 'part_ID' => $id]]]);
+                        }
                     }
                 }
             }

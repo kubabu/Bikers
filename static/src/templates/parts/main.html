@@ -1,0 +1,27 @@
+<!-- Lista rowerów -->
+<div class="row">
+    <div class="col-xs-12" ng-controller="PartsCtrl">
+        <div class="jumbotron">
+            <a href="#/parts/new" class="btn btn-primary btn-block btn-lg">Dodaj nową część</a>
+        </div>
+
+        <table class="table table-responsive table-hover">
+            <tr>
+                <th>Lp</th>
+                <th>Nazwa</th>
+                <th>Detale</th>
+                <th>Akcje</th>
+            </tr>
+            <tr ng-repeat="part in parts">
+                <td>{{$index + 1}}.</td>
+                <td>{{part.name}}</td>
+                <td>{{part.description}}</td>
+                <td>
+                    <!--<a ng-href="#/parts/show/{{part.ID}}" class="btn btn-primary">Zobacz</a>-->
+                    <a ng-href="#/parts/edit/{{part.ID}}" class="btn btn-info">Edytuj</a>
+                    <a ng-click="delete(part.ID)" class="btn btn-danger">Usuń</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
